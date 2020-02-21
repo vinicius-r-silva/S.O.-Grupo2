@@ -1,1 +1,1 @@
-# S.O.-Grupo2
+# SO - Grupo2
