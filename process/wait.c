@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     }
 
     if (cpid == 0)
-    { /* Code executed by child */
+    { //executado pelo filho
+        printf("PID do processo filho: %ld\n", (long)getpid());
         for (int i = 0; i < 5; i++)
             printf("processo pai esta me esperando\n");
 

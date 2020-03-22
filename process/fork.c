@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
     }
 
     if (cpid == 0) //executado pelo filho
-        printf("Child PID is: %ld\n", (long)getpid());
+        printf("PID do processo filho: %ld\n", (long)getpid());
 
     else //executado pelo pai
-        printf("father PID is: %ld\n", (long)getpid());
+        printf("PID do processo pai: %ld\n", (long)getpid());
 }
