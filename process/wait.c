@@ -27,6 +27,6 @@ int main(int argc, char *argv[])
     else
     {
         waitpid(-1, &wstatus, 0);
-        printf("exited, status=%d\n", WEXITSTATUS(wstatus));
+        printf("status de saida=%d\n", WEXITSTATUS(wstatus));
     }
 }
