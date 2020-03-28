@@ -31,7 +31,7 @@ int main(int argc, char* argv[]){
 
     if(file < 0){               //Verificação caso ocorra um erro na abertura do arquivo
         perror("file");
-        exit(0);
+        exit(1);
     }
 
     printf("Arquivo aberto com sucesso\n");
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]){
     if(write(1, buffer, B_SIZE) < 0){   //Verificação de erro da escrita ao STDOUT
        
         perror("file");
-        exit(2);
+        exit(1);
 
     }
 
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]){
     if(close(file) < 0){        //Verificação de erro do arquivo
         
         perror("file");
-        exit(3);
+        exit(1);
 
     }else{
 
