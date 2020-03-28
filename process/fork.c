@@ -5,13 +5,11 @@
 
 int main(int argc, char *argv[])
 {
-    pid_t cpid;
+    pid_t cpid; //guarda a id do processo
 
-    //cria novo processo
-    cpid = fork();
+    cpid = fork(); //cria processo filho
 
-    //verifica se deu erro
-    if (cpid == -1)
+    if (cpid == -1) //verifica se deu erro
     {
         perror("fork");
         exit(EXIT_FAILURE);

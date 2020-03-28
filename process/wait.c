@@ -6,11 +6,11 @@
 
 int main(int argc, char *argv[])
 {
-    pid_t cpid, w;
-    int wstatus;
+    pid_t cpid;  //guarda a id do processo filho
+    int wstatus; //guarda o status do processo filho
 
-    cpid = fork();
-    if (cpid == -1)
+    cpid = fork();  //cria o processo filho
+    if (cpid == -1) //confere se foi um sucesso
     {
         perror("fork");
         exit(EXIT_FAILURE);
@@ -24,9 +24,11 @@ int main(int argc, char *argv[])
 
         exit(1);
     }
-    else
+    else //executado pelo pai
     {
-        waitpid(-1, &wstatus, 0);
+        waitpid(-1, &wstatus, 0); //espera o processo filho
         printf("status de saida=%d\n", WEXITSTATUS(wstatus));
     }
+
+    return 0;
 }
