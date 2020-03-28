@@ -11,22 +11,6 @@
 
 #define SHMSIZE 20
 
-char readChar(){
-    char c, r;
-    
-    //le o primeiro caractere
-    r = getchar();
-    while(r == '\n' || r == '\0' || r == 0)
-        r = getchar();
-    
-    //limpa o buffer
-    c = getchar();
-    while(c != '\n' && c != '\0' && c != 0)
-        c = getchar();
-
-    return r;
-}
-
 int main() {
     pid_t cpid;
     int wstatus;
@@ -56,18 +40,9 @@ int main() {
         }
 
         char *str = (char *) shm; //trata shm como uma string
+        strcpy(str, "Test");
 
-        int i;
-        char n;
-        for(i=0; i<5; i++) {      //le 5 caracteres
-            printf("%d - Digite um caractere: ", i);
-            n = readChar();
-            *str = n;             //acrescenta o valor lido a string
-            str++;
-        }
-        *str = '\0'; //como se trata de uma string, coloca '\0' no final
-
-        printf ("Processo filho escreveu: %s\n\n",shm);
+        printf ("Processo filho escreveu: %s\n",shm);
         shmdt(shm); //CHAMADA DO SISTEMA shmdt. Descopla segmento de memória criado com o shmget
 
         exit(EXIT_SUCCESS);
@@ -77,7 +52,7 @@ int main() {
         shm = shmat(shmid, 0, 0); 
         waitpid(-1, &wstatus, 0); //CHAMADA DO SISTEMA waitpid. ((-1) -> espera processos filhos terminarem, salva o status de execução do filho em wstatus)
 
-        printf("processo filho terminou a execução com status = %d\n", WEXITSTATUS(wstatus));
+        printf("processo filho terminou a execução com status %d\n", WEXITSTATUS(wstatus));
         if (shm == (void*)-1){
             perror("shmat - pai");
             exit(EXIT_FAILURE);
