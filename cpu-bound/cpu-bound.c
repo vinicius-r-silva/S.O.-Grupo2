@@ -5,6 +5,9 @@
 #include <sys/types.h>
 #include <math.h>
 
+//Para compilar: gcc cpu-bound.c -lm -o cpu-bound
+//Para rodar: ./cpu-bound
+
 int main(int argc, char *argv[])
 {
     pid_t cpid; //guarda a id do processo

@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <sys/types.h>
 
+//Para compilar: gcc wait.c -o wait
+//Para rodar: ./wait
+
 int main(int argc, char *argv[])
 {
     pid_t cpid;  //guarda a id do processo filho
