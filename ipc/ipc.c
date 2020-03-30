@@ -9,7 +9,7 @@
 #include <string.h>   
 #include <stdlib.h>
 
-#define SHMSIZE 20
+#define SHMSIZE 30
 
 int main() {
     pid_t cpid;
@@ -40,7 +40,7 @@ int main() {
         }
 
         char *str = (char *) shm; //trata shm como uma string
-        strcpy(str, "Test");
+        strcpy(str, "String do filho para o pai");
 
         printf ("Processo filho escreveu: %s\n",shm);
         shmdt(shm); //CHAMADA DO SISTEMA shmdt. Descopla segmento de memória criado com o shmget
