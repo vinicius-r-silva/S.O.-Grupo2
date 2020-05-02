@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <sys/types.h>
 
+//Para compilar: gcc fork.c -o fork
+//Para rodar: ./fork
+
 int main(int argc, char *argv[])
 {
     pid_t cpid; //guarda a id do processo
