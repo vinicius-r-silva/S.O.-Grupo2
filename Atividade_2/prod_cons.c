@@ -1,4 +1,4 @@
-//gcc -Wall -ggdb3  Atividade_2/test.c -o Atividade_2/test -lpthread
+//gcc -Wall -ggdb3  Atividade_2/prod_cons.c -o Atividade_2/prod_cons -lpthread
 
 #include <stdio.h>
 #include <stdlib.h>
