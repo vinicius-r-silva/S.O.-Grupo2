@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 #define FOREVER 1
-
+#define MAX 10000
 #define BUFFER_SIZE 10
 
 typedef struct th_args
@@ -20,33 +20,77 @@ typedef struct th_args
     void (*WaitFunction)();
 } th_args;
 
+typedef struct tist_t{
+
+    struct tist_t *next;
+    int item;
+
+}list_t;
+
 sem_t mutex, empty, full;
 
 pthread_mutex_t the_mutex;
 pthread_cond_t condc, condp;
 
-int buffer[BUFFER_SIZE], count, itemCount, lastCount = 0;
+int itemCount, lastCount = 0;
+int maxProd, maxCons;
 
 void *(*Produtor)(void *);
 void *(*Consumidor)(void *);
 
+list_t* begin = NULL;
+list_t* last = NULL;
+list_t* prev = NULL;
+
+void push(){
+    list_t *temp;
+
+    temp = (list_t*) malloc(sizeof(list_t));
+    temp->item = itemCount + 1;
+    temp->next = begin;
+    begin = temp;
+}
+
+void pop(){
+    list_t* temp;
+
+    temp = begin;
+    begin = begin->next;
+
+    free(temp);
+}
 
 void *Produtor_Sem(void *args){
     printf("Iniciando Produtor com semaforo");
-    int item = 1;
 
     while (FOREVER) {
         sem_wait(&empty);
         sem_wait(&mutex);
 
-        buffer[itemCount] = item;
+        if(itemCount == 0){
+            begin = (list_t*) malloc(sizeof(list_t));
+            begin->item = itemCount + 1;
+            begin->next = NULL;
+        }else{
+            push();
+        }
+
         itemCount++;
-        printf("Produtor - item %d produzido\n", itemCount);
+        maxProd++;
+        printf("Produtor - item %d produzido\n", begin->item);
 
         sem_post(&mutex);
         sem_post(&full);
-        usleep(1);
+
+        if(maxProd == MAX){
+            printf("Produtor produziu %d itens. Encerrando produtor\n", MAX);
+            break;
+        }
+
+        usleep(10);
     }
+
+    return NULL;
 }
 
 void *Consumidor_Sem(void *args){
@@ -56,18 +100,33 @@ void *Consumidor_Sem(void *args){
         sem_wait(&full);
         sem_wait(&mutex);
 
-        itemCount--;
-        buffer[itemCount] = 0;
-        printf("Consumidor - item %d consumido.\n", itemCount + 1);
+        if(itemCount == 1){
+            free(begin);
+            begin = NULL;
+            last = NULL;
+            printf("Consumidor - item 1 consumido\n");
+        }else{
+            printf("Consumidor - item %d consumido\n", begin->item);
+            pop();
+        }
 
+        itemCount--;
+        maxCons++;
         sem_post(&mutex);
         sem_post(&empty);
-        usleep(1);
+        
+        if(maxCons == MAX){
+            printf("Consumidor consumiu %d itens. Encerrando consumidor\n", MAX);
+            break;
+        }
+
+        usleep(10);
     }
+
+    return NULL;
 }
 
-void *Produtor_sleepWakeup(void *args)
-{
+void *Produtor_sleepWakeup(void *args){
     printf("Iniciando Produtor com sleep wakeup\n");
     usleep(100);
 
@@ -78,72 +137,108 @@ void *Produtor_sleepWakeup(void *args)
             exit(EXIT_FAILURE);
         }
 
+        
+        pthread_mutex_lock(&the_mutex); /* protect buffer */
+        printf("Produtor - Bloqueando Buffer\n");
+
         if (itemCount == BUFFER_SIZE)
             printf("Produtor - Sem espaço para produzir, liberando buffer\n");
         while (itemCount == BUFFER_SIZE){
             pthread_cond_wait(&condp, &the_mutex);
         }
-        
 
-        pthread_mutex_lock(&the_mutex); /* protect buffer */
-        printf("Produtor - Bloqueando Buffer\n");
-
-        buffer[itemCount] = 1;
-        printf("Produtor - item %d produzido\n", itemCount);
+        if(itemCount == 0){
+            begin = (list_t*) malloc(sizeof(list_t));
+            begin->item = itemCount + 1;
+            begin->next = NULL;
+        }else{
+            push();
+        }
         lastCount = itemCount;
         itemCount++;
-
-        pthread_mutex_unlock(&the_mutex);
+        maxProd++;
+        
+        printf("Produtor - item %d produzido\n", begin->item);
+        
         if (lastCount == 0){
             pthread_cond_signal(&condc); /* wake up consumer */
         }
+        pthread_mutex_unlock(&the_mutex);
 
         printf("Produtor - Liberando Buffer\n");
+
+        if(maxProd == MAX){
+            printf("Produtor produziu %d itens. Encerrando produtor\n", MAX);
+            break;
+        }
+
         usleep(10);
     }
+
+    return NULL;
 }
 
-void *Consumidor_sleepWakeup(void *args)
-{
+void *Consumidor_sleepWakeup(void *args){
     printf("Iniciando Consumidor com sleep wakeup");
-    while (FOREVER)
-    {
+    while (FOREVER){
 
         if (itemCount < 0 || itemCount > BUFFER_SIZE){
             printf("-consumidor fora dos limites");
             exit(EXIT_FAILURE);
         }
 
-      	
+        pthread_mutex_lock(&the_mutex); /* protect buffer */
+        printf("Consumidor - Bloqueando Buffer\n");
+
         if (itemCount == 0)
             printf("Consumidor - Sem nada para consumir, esperando produtor\n");
       	while(itemCount == 0){
             pthread_cond_wait(&condc, &the_mutex);            
         }
 
-        pthread_mutex_lock(&the_mutex); /* protect buffer */
-        printf("Consumidor - Bloqueando Buffer\n");
+        if(itemCount == 1){
+            free(begin);
+            begin = NULL;
+
+            last = NULL;
+            printf("Consumidor - item 1 consumido\n");
+        }else{
+            if(begin == NULL){
+                printf("Begin NULL");
+                getchar();
+            }
+            printf("Consumidor - item %d consumido\n", begin->item);
+            pop();
+        }
 
         lastCount = itemCount;
         itemCount--;
-        buffer[itemCount] = 0;
-        printf("Consumidor - item %d consumido\n", itemCount);
+        maxCons++;
 
-        pthread_mutex_unlock(&the_mutex);
         if (lastCount == BUFFER_SIZE){
             pthread_cond_signal(&condp); /* wake up consumer */
         }
+        pthread_mutex_unlock(&the_mutex);
 
         printf("Consumidor - Liberando Buffer\n");
+
+        if(maxCons == MAX){
+            printf("Consumidor consumiu %d itens. Encerrando consumidor\n", MAX);
+            break;
+        }
+
         usleep(10);
     }
+
+    return NULL;
 }
 
 int main(int argc, char *argv[]){
     int ThErr1 = 0, ThErr2 = 0;
 
-    count = 0;
     itemCount = 0;
+    maxProd = 0;
+    maxCons = 0;
 
     sem_init(&mutex, 0, 1);
     sem_init(&empty, 0, BUFFER_SIZE);
@@ -176,12 +271,12 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
+    pthread_join(ThHandle[0], NULL);
+    pthread_join(ThHandle[1], NULL);
+
     pthread_mutex_destroy(&the_mutex); /* Free up the_mutex */
     pthread_cond_destroy(&condc);      /* Free up consumer condition variable */
     pthread_cond_destroy(&condp);      /* Free up producer condition variable */
-    // pthread_attr_destroy(&ThAttr);
-    pthread_join(ThHandle[0], NULL);
-    pthread_join(ThHandle[1], NULL);
 
     return (EXIT_SUCCESS);
 }
