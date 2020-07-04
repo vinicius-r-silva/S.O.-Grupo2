@@ -16,6 +16,8 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 add_executable(Simulador_Memoria
   src/main.cpp
   src/simulador_memoria.cpp
+  src/memory.cpp
+  include/memory.h
   include/simulador_memoria.h
   ui/simulador_memoria.ui
 )
