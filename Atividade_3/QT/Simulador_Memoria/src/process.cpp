@@ -54,53 +54,46 @@ void Process::replace_physical(int src, int dst){
 std::string Process::print(){
     std::string str;
     int pagesPerLine = 3;
-    char bin[6];
     int i;
-
-    bin[5] = '\0';
 
     //----------------------- printing Header ---------------------/
 
-    str.append("\n#########################################################\n");
-    str.append("                       PROCESSO ");
+    str.append("\n###########################################################\n");
+    str.append("                        PROCESSO ");
     str.append(std::to_string(id));
     str.append("\n");
-    str.append("Offset         ");
+    str.append("Offset");
 
     for(i = 0; i < pagesPerLine; i++){
-        to_binary(i, bin, 5);
-        str.append(bin);
-        str.append("          ");
+        char buff[20];
+        sprintf(buff, "        %02d       ", i);
+        str.append(buff);
     }
     str.append("\n");
 
     //Line is the "---..." separation between values
     //its size depends on the quantity of values per line
-    char Line[pagesPerLine * 15 + 3];
-    memset(Line, '-', pagesPerLine * 15 + 1);
-    Line[pagesPerLine * 15 + 1] = '\r';
-    Line[pagesPerLine * 15 + 2] = '\0';
+    char Line[pagesPerLine * 17 + 3];
+    memset(Line, '-', pagesPerLine * 17 + 1);
+    Line[pagesPerLine * 17 + 1] = '\r';
+    Line[pagesPerLine * 17 + 2] = '\0';
 
     //printing the values
     i = 0;
     while(i < qtdPages){
         //prints the offset
-        to_binary(i, bin, 5);
-        str.append("         ");
-        str.append(Line);
-        str.append("\n");
-        str.append(bin);
-        str.append("     |");
+        char buff[100];
+        sprintf(buff, "      %s\n  %02d  |", Line, i);
+        str.append(buff);
 
         //print the line values
         do{
             if(map[i].physical < 0){
-                str.append("     DISCO    |");
+                str.append("     DISCO      |");
             }else{
-                to_binary(i, bin, 5);
-                char buff[20];
-                sprintf(buff, "     %05d    |", map[i].physical);
-                str.append(buff);
+                char buff2[20];
+                sprintf(buff2, " P:%02d L:%02d R:%02d |", map[i].physical, 0, 0);
+                str.append(buff2);
             }
 
             i++;
@@ -112,11 +105,11 @@ std::string Process::print(){
 
     //If the grid isn't finished, show that the current address don't exists
     while(i % pagesPerLine != 0){
-        str.append("  ----------  |");
+        str.append("  ------------  |");
         i++;
     }
 
-    str.append("\n          ");
+    str.append("\n      ");
     str.append(Line);
     str.append("\n");
 
