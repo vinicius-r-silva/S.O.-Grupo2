@@ -7,6 +7,9 @@ MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize){
     this->ramSize = ramSize;
     this->diskSize = diskSize;
 
+    this->ramPagesCount = ramSize / pageSize;
+    this->diskPagesCount = diskSize / pageSize;
+
     this->ramAvailable = ramSize;
     this->diskAvailable = diskSize;
 
@@ -14,6 +17,7 @@ MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize){
     this->processesAtDisk = 0;
  
     processes = nullptr;
+    lruBegin = nullptr;
 
     warning = (char*)calloc(1000, sizeof(char));
     sprintf(warning, "no action executed");
@@ -60,17 +64,47 @@ void MemoryManagement::create_process(int id, int size){
         add_wating_process(id, size);
         return;
     }
-
-    
-    
 }
 
-char* MemoryManagement::get_ram(){
-    return ram->print();
+int MemoryManagement::addPage(int pid, int page_id){
+    int i = 0;
+    page novo;
+    page **ramPages = ram->get_pages(); 
+    if(ramAvailable > 0){
+        for(i = 0; i < ramPagesCount; i++){
+            if(ramPages[i]->pid == -1){
+                ramPages[i]->pid = -1;
+                ramPages[i]->page_id = page_id;
+
+                //insert on lru
+                break;
+            }
+        }
+    }
+    else{
+        for(i = 0; i < ramPagesCount; i++){
+            if(ramPages[i]->references == 0){
+                //remove from lru
+                //move do disk
+
+                ramPages[i]->pid = -1;
+                ramPages[i]->page_id = page_id;
+
+                //insert on lru
+                break;
+            }
+        }
+    }
+    if(i == ramPagesCount) return -1;
+    return i;
 }
 
-char* MemoryManagement::get_disk(){
-    return disk->print();
+void MemoryManagement::get_ram(char *str){
+    ram->print(str);
+}
+
+void MemoryManagement::get_disk(char *str){
+    disk->print(str);
 }
 
 char* MemoryManagement::get_warning(){

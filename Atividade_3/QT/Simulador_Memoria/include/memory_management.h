@@ -26,6 +26,9 @@ private:
     int ramSize;
     int diskSize;
 
+    int ramPagesCount;
+    int diskPagesCount;
+
     int ramAvailable;
     int diskAvailable;
 
@@ -35,18 +38,21 @@ private:
     Memory *ram;
     Memory *disk;
 
+    page *lruBegin;
+
     process_list *processes;
     waiting_process *waiting_processes;
 
 
+    int addPage(int pid, int page_id);
     void add_wating_process(int pid, int size);
 
 public:
     MemoryManagement(int ramSize, int diskSize, int pageSize);
     ~MemoryManagement();
 
-    char* get_ram();
-    char* get_disk();
+    void get_ram(char *str);
+    void get_disk(char *str);
     char* get_warning();
 
     void create_process(int id, int size);

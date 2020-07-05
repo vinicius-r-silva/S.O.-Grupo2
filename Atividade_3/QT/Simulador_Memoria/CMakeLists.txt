@@ -19,6 +19,8 @@ add_executable(Simulador_Memoria
   src/memory.cpp
   src/animation.cpp
   src/memory_management.cpp
+  src/process.cpp
+  src/interpreter.cpp
   include/memory.h
   include/simulador_memoria.h
   include/animation.h
@@ -26,6 +28,8 @@ add_executable(Simulador_Memoria
   include/simulador_memoria.h
   include/memory_management.h
   include/defines.h
+  include/process.h
+  include/interpreter.h
   ui/simulador_memoria.ui
   resources/icons.qrc
 )

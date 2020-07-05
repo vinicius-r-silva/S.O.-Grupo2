@@ -7,6 +7,9 @@
 #include <QTextStream>
 #include <QDebug>
 
+#include "../include/defines.h"
+#include "../include/interpreter.h"
+
 Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
     , ui(new Ui::Simulador_Memoria) {
     /////////////////////////////////
@@ -35,6 +38,8 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
 
     QObject::connect(animation, SIGNAL(finished()), this, SLOT(animationFinished()));
     QObject::connect(animation, SIGNAL(sendCommand(int,QString)), this, SLOT(receiveCommand(int,QString)));
+
+    mmu = new MemoryManagement(32, 32, 4);
 }
 
 Simulador_Memoria::~Simulador_Memoria(){
@@ -203,9 +208,34 @@ void Simulador_Memoria::animationFinished(){
     ui->te_commands->setHtml(_opHtml);
 }
 
-void Simulador_Memoria::receiveCommand(int line, QString command){
+void Simulador_Memoria::receiveCommand(int line, QString commandStr){
     changeColor(line);
-    //qDebug() << command;
+    // qDebug() << commandStr;
+
+    comando cmd;
+    std::string stdStr = commandStr.toStdString();
+    char str[stdStr.size() + 1];
+	strcpy(str, stdStr.c_str());
+    if(read_comando(&cmd, str) == FAILURE){
+        ui->te_warning->setText("Comando incorreto");
+    }
+    else{
+        qDebug() << "pid: " << cmd.pid << ", action: " << cmd.action << ", arg: " << cmd.arg << "\n";
+        if(cmd.action == 'C' && cmd.pid == 1){
+            mmu->create_process(1, 4);
+            qDebug() << "processo criado\n";
+        }
+
+        char result[2000];
+        mmu->get_ram(result);
+        ui->te_RAM->setText(result);
+
+        mmu->get_disk(result);
+        ui->te_disk->setText(result);
+
+        ui->te_warning->setText(mmu->get_warning());
+
+    }
 }
 
 void Simulador_Memoria::changeColor(int line){

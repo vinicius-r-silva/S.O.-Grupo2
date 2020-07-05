@@ -28,7 +28,9 @@ public:
     int8_t get_type();
     int8_t get_size();
 
-    char* print();
+    page **get_pages();
+
+    void print(char* str);
 };
 
 #endif //MEMORY_H

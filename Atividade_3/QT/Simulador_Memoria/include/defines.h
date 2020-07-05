@@ -7,12 +7,25 @@
 #define RAM 0
 #define DISK 1
 
+struct comando{
+    int pid;
+    char action;
+    int arg;
+};
+
 struct page{
     int pid;
     int page_id;
 
-    page *next;
-    page *prev;
+    int references;
+
+    page *next_lru;
+    page *prev_lru;
+};
+
+struct page_map{
+    int logical;
+    int physical;
 };
 
 #endif //DEFINES_H

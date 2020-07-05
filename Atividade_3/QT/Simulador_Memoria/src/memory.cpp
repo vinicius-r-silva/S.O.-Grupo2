@@ -42,8 +42,12 @@ void Memory::to_binary(int a, char *bin, int size){
     }
 }
 
+page **Memory::get_pages(){
+    return pages;
+}
+
 //print the memory pages
-char* Memory::print(){
+void Memory::print(char* str){
     int i = 0; 
     char bin[6]; 
     int pagesPerLine = 3;
@@ -51,12 +55,12 @@ char* Memory::print(){
     bin[5] = '\0';
 
     //--------------printing Header--------------//
-    printf("Offset         ");
+    sprintf(str, "Offset         ");
     for(i = 0; i < pagesPerLine; i++){
         to_binary(i, bin, 5);
-        printf("%s          ", bin);
+        sprintf(str, "%s%s          ", str, bin);
     }
-    printf("\n");
+    sprintf(str, "%s\n", str);
     
     //Line is the "---..." separation between values
     //its size depends on the quantity of values per line
@@ -70,27 +74,27 @@ char* Memory::print(){
     while(i < qtdPages){
         //prints the offset
         to_binary(i, bin, 5);
-        printf("          %s\n", Line); 
-        printf("%s     |", bin);
+        sprintf(str, "%s          %s\n", str, Line); 
+        sprintf(str, "%s%s     |", str, bin);
 
         //print the line values
         do{
             if(pages[i] == nullptr || pages[i]->pid == -1)  //if this memory address is unoccupied, print a blank space
-                printf("              |");
+                sprintf(str, "%s              |", str);
             else                    //Otherwise, print the memory address data
-                printf("  P%d page %02d  |", pages[i]->pid, pages[i]->page_id);
+                sprintf(str, "%s  P%d page %02d  |", str, pages[i]->pid, pages[i]->page_id);
 
             i++;
         }while(i % pagesPerLine != 0 && i < qtdPages);
         
         if(i < qtdPages)
-            printf("\n");
+            sprintf(str, "%s\n", str);
     }
 
     //If the grid isn't finished, show that the current address don't exists
     while(i % pagesPerLine != 0){
-        printf("  Inexistente |");
+        sprintf(str, "%s  Inexistente |", str);
         i++;
     }
-    printf("\n          %s\n", Line);
+    sprintf(str, "%s\n          %s\n", str, Line);
 }

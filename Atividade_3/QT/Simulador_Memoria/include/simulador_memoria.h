@@ -2,7 +2,7 @@
 #define SIMULADOR_MEMORIA_H
 
 #include <QDialog>
-#include "memory.h"
+#include "memory_management.h"
 #include "animation.h"
 
 QT_BEGIN_NAMESPACE
@@ -38,7 +38,7 @@ private slots:
 private:
     Ui::Simulador_Memoria *ui;
     Animation *animation;
-    Memory mem;
+    MemoryManagement *mmu;
 
     QThreadPool *tp;
 
