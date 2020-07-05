@@ -39,14 +39,13 @@ private:
     Memory *disk;
 
     page *lruBegin;
+    page *lruEnd;
 
     process_list *processes;
     waiting_process *waiting_processes;
 
 
     int add_page_ram(page *new_page);
-
-
 
     int insert_page_disk(page* new_page);
     page* remove_page_disk(int pid, int page_id);

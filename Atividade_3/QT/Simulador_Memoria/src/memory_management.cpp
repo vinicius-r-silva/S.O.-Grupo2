@@ -19,6 +19,7 @@ MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize){
  
     processes = nullptr;
     lruBegin = nullptr;
+    lruEnd = nullptr;
     waiting_processes = nullptr;
 
     warning = (char*)calloc(1000, sizeof(char));
@@ -90,6 +91,7 @@ void MemoryManagement::create_process(int id, int size){
         new_page->pid = id;
         new_page->page_id = i;
         new_page->references = 0;
+        new_page->page_physical = -1;
         new_page->next_lru = nullptr;
         new_page->prev_lru = nullptr;
 
@@ -100,8 +102,7 @@ void MemoryManagement::create_process(int id, int size){
             //TODO: add at disk
         }
     }
-    sprintf(warning, "Processo %d, de tamanho %d, foi criado com sucesso", id, size);
-    
+    sprintf(warning, "Processo %d, de tamanho %d, foi criado com sucesso", id, size);    
 }
 
 int MemoryManagement::add_page_ram(page *new_page){
@@ -112,24 +113,46 @@ int MemoryManagement::add_page_ram(page *new_page){
         for(i = 0; i < ramPagesCount; i++){
             if(ramPages[i] == nullptr){
                 ramPages[i] = new_page;
+                ramAvailable-= pageSize;
+                new_page->page_physical = i;
 
-                //TODO: insert on lru
+                if(lruBegin == nullptr){
+                    lruBegin = new_page;
+                    lruEnd = new_page;
+                }else{
+                    new_page->next_lru = lruBegin;
+                    lruBegin->prev_lru = new_page;
+                    lruBegin = new_page;
+                }
+
                 break;
             }
         }
     }
     else{
         for(i = 0; i < ramPagesCount; i++){
-            if(ramPages[i]->references == 0){
-                //TODO: remove from lru
-                if(insert_page_disk(ramPages[i]) == FAILURE)
-                    return -1;
-                
-                ramPages[i] = new_page;
+        
+            page* page2remove = lruEnd;
+            lruEnd->prev_lru->next_lru = nullptr;
+            lruEnd = page2remove->prev_lru;
 
-                //TODO: insert on lru
-                break;
-            }
+            page2remove->next_lru = nullptr;
+            page2remove->prev_lru = nullptr;
+
+            new_page->next_lru = lruBegin;
+            lruBegin->prev_lru = new_page;
+            lruBegin = new_page;
+
+            if(insert_page_disk(page2remove) == FAILURE)
+                return -1;
+            
+            diskAvailable-=pageSize;
+
+            ramPages[page2remove->page_physical] = new_page;
+            new_page->page_physical = page2remove->page_physical;
+            page2remove->page_physical = -1;
+
+            break;
         }
     }
     if(i == ramPagesCount) return -1;
@@ -196,7 +219,11 @@ void MemoryManagement::clean_all(){
 
     processes = nullptr;
     lruBegin = nullptr;
+    lruEnd = nullptr;
     waiting_processes = nullptr;
+
+    ramAvailable = ramSize;
+    diskAvailable = diskSize;
 
     sprintf(warning, " ");
 }

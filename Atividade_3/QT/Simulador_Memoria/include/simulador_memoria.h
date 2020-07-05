@@ -40,6 +40,8 @@ private:
     Animation *animation;
     MemoryManagement *mmu;
 
+    void clean();
+
     QThreadPool *tp;
 
     int _pagSize;

@@ -16,6 +16,7 @@ struct comando{
 struct page{
     int pid;
     int page_id;
+    int page_physical;
 
     int references;
 

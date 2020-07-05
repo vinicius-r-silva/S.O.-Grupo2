@@ -178,8 +178,6 @@ void Simulador_Memoria::on_b_play_clicked(){
     ui->b_play->setEnabled(false);
     animation->setPausing(false);
 
-    mmu->clean_all();
-
     ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
     ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
     ui->te_warning->setText(mmu->get_warning());
@@ -196,6 +194,10 @@ void Simulador_Memoria::on_b_next_clicked(){
     animation->setPausing(true);
     animation->addStep();
 
+    ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
+    ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
+    ui->te_warning->setText(mmu->get_warning());
+
     if(tp->activeThreadCount() == 0){
         _opHtml = ui->te_commands->toHtml();
         animation->setRunning(true);
@@ -206,6 +208,8 @@ void Simulador_Memoria::on_b_next_clicked(){
 void Simulador_Memoria::on_b_stop_clicked(){
     animation->setRunning(false);
     animation->setPausing(false);
+
+    mmu->clean_all();
 }
 
 void Simulador_Memoria::animationFinished(){
@@ -233,9 +237,7 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
         }
 
         ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
-
         ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
-
         ui->te_warning->setText(mmu->get_warning());
 
     }
