@@ -77,10 +77,21 @@ void MemoryManagement::create_process(int id, int size){
     if(processes == nullptr)
         processes = novo;
     else{
-        novo->next = processes;
-        processes->prev = novo;
+        process_list *ptr = processes;
 
-        processes = novo;    
+        while(ptr->next != nullptr && novo->process->get_Id() < ptr->process->get_Id())
+            ptr = ptr->next;
+
+        if(ptr->next == nullptr){
+            ptr->next = novo;
+            novo->prev = ptr;
+            novo->next = nullptr;
+        }else{
+            novo->prev = ptr;
+            novo->next = ptr->next;
+            novo->next->prev = novo;
+            ptr->next = novo;
+        }
     }
 
     int result = 0;
@@ -146,6 +157,16 @@ void insert_page_disk(page* new_page){
 
 std::string MemoryManagement::get_disk(){
     return disk->print();
+}
+
+std::string MemoryManagement::get_proTable(){
+    std::string text;
+
+    for(process_list* ptr = processes; ptr->next != nullptr; ptr = ptr->next){
+        text.append(ptr->process->print());
+    }
+
+    return text;
 }
 
 char* MemoryManagement::get_warning(){

@@ -42,3 +42,10 @@ bool read_comando(comando *acao, char* string){
 
     return SUCESS;
 }
+
+void to_binary(int a, char *bin, int size){
+    int i = 0;
+    for(i = 0; i < size; i++){
+        bin[size - i - 1] = (a >> i & 1) + '0';
+    }
+}

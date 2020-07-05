@@ -4,6 +4,8 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "defines.h"
+#include "interpreter.h"
+#include <iostream>
 
 class Process {
 private:
@@ -25,7 +27,9 @@ public:
 
     int get_qtdPages();
 
-    char* print();
+    int get_Id();
+
+    std::string print();
 };
 
 #endif //PROCESS_H

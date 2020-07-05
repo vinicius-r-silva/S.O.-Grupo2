@@ -11,6 +11,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(Simulador_Memoria

@@ -515,7 +515,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -529,6 +529,12 @@ p, li { white-space: pre-wrap; }
        <width>471</width>
        <height>551</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
      </property>
     </widget>
    </widget>

@@ -34,14 +34,6 @@ int8_t Memory::get_type(){return memType;}
 
 int8_t Memory::get_size(){return size;}
 
-//convert's a integer to binary in char array
-void Memory::to_binary(int a, char *bin, int size){
-    int i = 0;
-    for(i = 0; i < size; i++){
-        bin[size - i - 1] = (a >> i & 1) + '0';
-    }
-}
-
 page **Memory::get_pages(){
     return pages;
 }
@@ -73,9 +65,9 @@ std::string Memory::print(){
 
     bin[5] = '\0';
 
-    //--------------printing Header--------------//
-
     str.append("Offset         ");
+
+    //--------------printing Header--------------//
 
     for(i = 0; i < pagesPerLine; i++){
         to_binary(i, bin, 5);
