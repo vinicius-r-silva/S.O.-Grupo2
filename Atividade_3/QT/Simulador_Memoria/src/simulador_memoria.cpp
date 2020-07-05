@@ -236,7 +236,9 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
 
         ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
         ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
-        ui->te_pagTable->setText(QString::fromStdString(mmu->get_proTable()));
+        QString text = QString::fromStdString(mmu->get_proTable());
+        ui->te_pagTable->setText(text);
+        //qDebug() << QString::fromStdString(mmu->get_proTable());
         ui->te_warning->setText(mmu->get_warning());
 
     }

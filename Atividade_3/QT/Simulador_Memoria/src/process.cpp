@@ -87,7 +87,7 @@ std::string Process::print(){
     while(i < qtdPages){
         //prints the offset
         to_binary(i, bin, 5);
-        str.append("          ");
+        str.append("         ");
         str.append(Line);
         str.append("\n");
         str.append(bin);
@@ -109,6 +109,7 @@ std::string Process::print(){
 
         if(i < qtdPages)
             str.append("\n");
+        str.append("\n");
     }
 
     //If the grid isn't finished, show that the current address don't exists

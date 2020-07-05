@@ -83,10 +83,15 @@ void MemoryManagement::create_process(int id, int size){
         while(ptr->next != nullptr && novo->process->get_Id() < ptr->process->get_Id())
             ptr = ptr->next;
 
-        if(ptr->next == nullptr){
+        if(ptr->next == nullptr && novo->process->get_Id() < ptr->process->get_Id()){
             ptr->next = novo;
             novo->prev = ptr;
             novo->next = nullptr;
+        }else if(ptr->next == nullptr){
+            novo->next = ptr;
+            novo->prev = ptr->prev;
+            ptr->prev = novo;
+            ptr->next = nullptr;
         }else{
             novo->prev = ptr;
             novo->next = ptr->next;
@@ -208,6 +213,7 @@ std::string MemoryManagement::get_proTable(){
 
     for(process_list* ptr = processes; ptr->next != nullptr; ptr = ptr->next){
         text.append(ptr->process->print());
+
     }
 
     return text;
