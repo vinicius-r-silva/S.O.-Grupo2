@@ -52,6 +52,9 @@ private:
 
     void add_wating_process(int pid, int size);
 
+
+    process_list* search_process(int id);
+
 public:
     MemoryManagement(int ramSize, int diskSize, int pageSize);
     ~MemoryManagement();
@@ -64,6 +67,7 @@ public:
     void clean_all();
 
     void create_process(int id, int size);
+    void kill_process(int id);
 };
 
 

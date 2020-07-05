@@ -53,6 +53,13 @@ void MemoryManagement::add_wating_process(int pid, int size){
     }
 }
 
+process_list* MemoryManagement::search_process(int id){
+    process_list* curr = processes;
+
+    return curr;
+    // while(curr != nullptr && curr->process->)
+}
+
 void MemoryManagement::create_process(int id, int size){
     int i = 0;
     int totalMemory = ramSize + diskSize;
@@ -104,6 +111,11 @@ void MemoryManagement::create_process(int id, int size){
     }
     sprintf(warning, "Processo %d, de tamanho %d, foi criado com sucesso", id, size);    
 }
+
+void MemoryManagement::kill_process(int id){
+    
+}
+
 
 int MemoryManagement::add_page_ram(page *new_page){
     int i = 0;
