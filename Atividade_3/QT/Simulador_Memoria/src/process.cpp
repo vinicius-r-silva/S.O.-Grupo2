@@ -58,10 +58,10 @@ std::string Process::print(){
 
     //----------------------- printing Header ---------------------/
 
-    str.append("\n###########################################################\n");
+    str.append("###########################################################\n");
     str.append("                        PROCESSO ");
     str.append(std::to_string(id));
-    str.append("\n");
+    str.append("\n\n");
     str.append("Offset");
 
     for(i = 0; i < pagesPerLine; i++){
@@ -111,7 +111,7 @@ std::string Process::print(){
 
     str.append("\n      ");
     str.append(Line);
-    str.append("\n");
+    str.append("\n\n");
 
     return str;
 }
