@@ -5,6 +5,7 @@
 #include <string.h>
 #include <inttypes.h>
 #include <stdio.h>
+#include <iostream>
 
 #include "defines.h"
 
@@ -30,7 +31,7 @@ public:
 
     page **get_pages();
 
-    void print(char* str);
+    std::string print();
 };
 
 #endif //MEMORY_H

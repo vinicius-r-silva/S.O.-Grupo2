@@ -99,12 +99,12 @@ int MemoryManagement::addPage(int pid, int page_id){
     return i;
 }
 
-void MemoryManagement::get_ram(char *str){
-    ram->print(str);
+std::string MemoryManagement::get_ram(){
+    return ram->print();
 }
 
-void MemoryManagement::get_disk(char *str){
-    disk->print(str);
+std::string MemoryManagement::get_disk(){
+    return disk->print();
 }
 
 char* MemoryManagement::get_warning(){

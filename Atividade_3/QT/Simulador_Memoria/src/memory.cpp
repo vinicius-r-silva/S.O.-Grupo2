@@ -47,20 +47,30 @@ page **Memory::get_pages(){
 }
 
 //print the memory pages
-void Memory::print(char* str){
-    int i = 0; 
-    char bin[6]; 
+std::string Memory::print(){
+    std::string str;
+
     int pagesPerLine = 3;
+    int i = 0;
+
+    char bin[6];
 
     bin[5] = '\0';
 
     //--------------printing Header--------------//
-    sprintf(str, "Offset         ");
+
+    str.append("Offset         ");
+    //sprintf(str, "Offset         ");
+
     for(i = 0; i < pagesPerLine; i++){
         to_binary(i, bin, 5);
-        sprintf(str, "%s%s          ", str, bin);
+        str.append(bin);
+        str.append("          ");
+        //str.append("          ");
+        //sprintf(str, "%s%s          ", str, bin);
     }
-    sprintf(str, "%s\n", str);
+    str.append("\n");
+    //sprintf(str, "%s\n", str);
     
     //Line is the "---..." separation between values
     //its size depends on the quantity of values per line
@@ -74,27 +84,47 @@ void Memory::print(char* str){
     while(i < qtdPages){
         //prints the offset
         to_binary(i, bin, 5);
-        sprintf(str, "%s          %s\n", str, Line); 
-        sprintf(str, "%s%s     |", str, bin);
+        str.append("          ");
+        str.append(Line);
+        str.append("\n");
+        str.append(bin);
+        str.append("     |");
+
+        //sprintf(str, "%s          %s\n", str, Line);
+        //sprintf(str, "%s%s     |", str, bin);
 
         //print the line values
         do{
             if(pages[i] == nullptr || pages[i]->pid == -1)  //if this memory address is unoccupied, print a blank space
-                sprintf(str, "%s              |", str);
-            else                    //Otherwise, print the memory address data
-                sprintf(str, "%s  P%d page %02d  |", str, pages[i]->pid, pages[i]->page_id);
+                str.append("              |");
+                //sprintf(str, "%s              |", str);
+            else{                    //Otherwise, print the memory address data
+                str.append("  P");
+                str.append(std::to_string(pages[i]->pid));
+                str.append(" page ");
+                str.append(std::to_string(pages[i]->page_id));
+                str.append("  |");
+                //sprintf(str, "%s  P%d page %02d  |", str, pages[i]->pid, pages[i]->page_id);
+            }
 
             i++;
         }while(i % pagesPerLine != 0 && i < qtdPages);
         
         if(i < qtdPages)
-            sprintf(str, "%s\n", str);
+            str.append("\n");
+            //sprintf(str, "%s\n", str);
     }
 
     //If the grid isn't finished, show that the current address don't exists
     while(i % pagesPerLine != 0){
-        sprintf(str, "%s  Inexistente |", str);
+        str.append("  ----------  |");
+        //sprintf(str, "%s  Inexistente |", str);
         i++;
     }
-    sprintf(str, "%s\n          %s\n", str, Line);
+    str.append("\n          ");
+    str.append(Line);
+    str.append("\n");
+    //sprintf(str, "%s\n          %s\n", str, Line);
+
+    return str;
 }

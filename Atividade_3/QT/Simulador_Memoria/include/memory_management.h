@@ -19,8 +19,7 @@ struct waiting_process{
     waiting_process *prev;
 };
 
-class MemoryManagement
-{
+class MemoryManagement {
 private:
     char* warning;
     int ramSize;
@@ -51,8 +50,8 @@ public:
     MemoryManagement(int ramSize, int diskSize, int pageSize);
     ~MemoryManagement();
 
-    void get_ram(char *str);
-    void get_disk(char *str);
+    std::string get_ram();
+    std::string get_disk();
     char* get_warning();
 
     void create_process(int id, int size);
