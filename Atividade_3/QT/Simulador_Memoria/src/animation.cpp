@@ -26,7 +26,8 @@ void Animation::run(){
         }
 
         QString command = _commands->at(_line);
-        emit(sendCommand(_line, command));
+        if(_running)
+            emit(sendCommand(_line, command));
 
         if(!_pausing)
             usleep(_delay * MAXDELAY);
