@@ -122,9 +122,9 @@ int MemoryManagement::add_page_ram(page *new_page){
         for(i = 0; i < ramPagesCount; i++){
             if(ramPages[i]->references == 0){
                 //TODO: remove from lru
-                //TODO: move do disk
-
-                    free(ramPages[i]);
+                if(insert_page_disk(ramPages[i]) == FAILURE)
+                    return -1;
+                
                 ramPages[i] = new_page;
 
                 //TODO: insert on lru
@@ -136,9 +136,31 @@ int MemoryManagement::add_page_ram(page *new_page){
     return i;
 }
 
-void insert_page_disk(page* new_page){
+int MemoryManagement::insert_page_disk(page* new_page){
+    int i = 0;
+    page novo;
+    page **diskPages = disk->get_pages(); 
+    if(diskAvailable > 0){
+        for(i = 0; i < diskPagesCount; i++){
+            if(diskPages[i] == nullptr){
+                diskPages[i] = new_page;
+                break;
+            }
+        }
+    }
+    else
+        return FAILURE;
+
+    if(i == diskPagesCount)
+        return FAILURE;
+
+    return SUCESS;    
+}
+
+page* MemoryManagement::remove_page_disk(int pid, int page_id){
     
 }
+
 
 void MemoryManagement::get_ram(char *str){
     ram->print(str);

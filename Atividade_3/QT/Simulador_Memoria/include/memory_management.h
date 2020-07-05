@@ -46,6 +46,12 @@ private:
 
 
     int add_page_ram(page *new_page);
+
+
+
+    int insert_page_disk(page* new_page);
+    page* remove_page_disk(int pid, int page_id);
+
     void add_wating_process(int pid, int size);
 
 public:
