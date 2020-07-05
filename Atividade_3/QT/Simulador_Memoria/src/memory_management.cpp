@@ -161,13 +161,12 @@ page* MemoryManagement::remove_page_disk(int pid, int page_id){
     
 }
 
-
-void MemoryManagement::get_ram(char *str){
-    ram->print(str);
+std::string MemoryManagement::get_ram(){
+    return ram->print();
 }
 
-void MemoryManagement::get_disk(char *str){
-    disk->print(str);
+std::string MemoryManagement::get_disk(){
+    return disk->print();
 }
 
 char* MemoryManagement::get_warning(){

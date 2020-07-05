@@ -494,6 +494,16 @@ p, li { white-space: pre-wrap; }
    <property name="title">
     <string>AVISO</string>
    </property>
+   <widget class="QTextEdit" name="te_warning">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>191</width>
+      <height>191</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
@@ -592,16 +602,6 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QTextEdit" name="te_warning">
-   <property name="geometry">
-    <rect>
-     <x>770</x>
-     <y>410</y>
-     <width>191</width>
-     <height>191</height>
-    </rect>
-   </property>
   </widget>
  </widget>
  <resources/>

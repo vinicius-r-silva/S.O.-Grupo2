@@ -180,13 +180,8 @@ void Simulador_Memoria::on_b_play_clicked(){
 
     mmu->clean_all();
 
-    char result[2000];
-    mmu->get_ram(result);
-    ui->te_RAM->setText(result);
-
-    mmu->get_disk(result);
-    ui->te_disk->setText(result);
-
+    ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
+    ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
     ui->te_warning->setText(mmu->get_warning());
 
     if(tp->activeThreadCount() == 0){
@@ -237,12 +232,9 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
             qDebug() << "processo criado\n";
         }
 
-        char result[2000];
-        mmu->get_ram(result);
-        ui->te_RAM->setText(result);
+        ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
 
-        mmu->get_disk(result);
-        ui->te_disk->setText(result);
+        ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
 
         ui->te_warning->setText(mmu->get_warning());
 

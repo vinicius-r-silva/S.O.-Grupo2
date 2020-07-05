@@ -5,8 +5,7 @@
 #include "stdio.h"
 #include "defines.h"
 
-class Process
-{
+class Process {
 private:
     int id;
     int qtdPages;
