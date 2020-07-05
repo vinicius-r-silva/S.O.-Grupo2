@@ -53,11 +53,22 @@ void MemoryManagement::add_wating_process(int pid, int size){
     }
 }
 
-process_list* MemoryManagement::search_process(int id){
-    process_list* curr = processes;
+waiting_process* MemoryManagement::search_waiting_process(int id){
+    waiting_process* curr = waiting_processes;
+
+    while(curr != nullptr && id != curr->id)
+        curr = curr->next;
 
     return curr;
-    // while(curr != nullptr && curr->process->)
+}
+
+process_list* MemoryManagement::search_active_process(int id){
+    process_list* curr = processes;
+
+    while(curr != nullptr && id != curr->process->get_Id())
+        curr = curr->next;
+
+    return curr;
 }
 
 void MemoryManagement::create_process(int id, int size){
@@ -73,6 +84,16 @@ void MemoryManagement::create_process(int id, int size){
     if(size > totalFree){
         sprintf(warning, "Nao ha memoria livre suficiente para criar o processo, processo em espera");
         add_wating_process(id, size);
+        return;
+    }
+
+    if(search_active_process(id) == nullptr){
+        sprintf(warning, "Processo com ID %d ja existe", id);
+        return;
+    }
+
+    if(search_waiting_process(id) == nullptr){
+        sprintf(warning, "Processo com ID %d ja existe, e esta na lista de espera", id);
         return;
     }
 
@@ -124,13 +145,21 @@ void MemoryManagement::create_process(int id, int size){
 }
 
 void MemoryManagement::kill_process(int id){
-    
+    id++;
 }
 
+int MemoryManagement::get_ordem_lru(int pid, int page_id){
+    int i = 0;
+    page *curr = lruBegin;
+    while(curr != nullptr && (curr->pid != pid || curr->page_id != page_id)){
+        curr = curr->next_lru;
+        i++;
+    }
+    return i;
+}
 
 int MemoryManagement::add_page_ram(page *new_page){
     int i = 0;
-    page novo;
     page **ramPages = ram->get_pages(); 
     if(ramAvailable > 0){
         for(i = 0; i < ramPagesCount; i++){
@@ -184,7 +213,6 @@ int MemoryManagement::add_page_ram(page *new_page){
 
 int MemoryManagement::insert_page_disk(page* new_page){
     int i = 0;
-    page novo;
     page **diskPages = disk->get_pages(); 
     if(diskAvailable > 0){
         for(i = 0; i < diskPagesCount; i++){
@@ -204,7 +232,8 @@ int MemoryManagement::insert_page_disk(page* new_page){
 }
 
 page* MemoryManagement::remove_page_disk(int pid, int page_id){
-    
+    pid = pid + page_id;
+    return nullptr;
 }
 
 std::string MemoryManagement::get_ram(){

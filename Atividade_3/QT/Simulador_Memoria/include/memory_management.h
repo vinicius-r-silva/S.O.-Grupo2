@@ -53,7 +53,8 @@ private:
     void add_wating_process(int pid, int size);
 
 
-    process_list* search_process(int id);
+    process_list* search_active_process(int id);
+    waiting_process* search_waiting_process(int id);
 
 public:
     MemoryManagement(int ramSize, int diskSize, int pageSize);
@@ -64,6 +65,7 @@ public:
     std::string get_proTable();
     char* get_warning();
 
+    int get_ordem_lru(int pid, int page_id);
 
     void clean_all();
 

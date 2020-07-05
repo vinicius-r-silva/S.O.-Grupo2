@@ -17,7 +17,7 @@ Animation::Animation(QStringList *commands){
 void Animation::run(){
     usleep(_delay * MAXDELAY);
 
-    for(_line; _line < _commands->size() && _running; _line++){
+    for(; _line < _commands->size() && _running; _line++){
         while(_pausing){
             if(_step > 0){
                 _step--;

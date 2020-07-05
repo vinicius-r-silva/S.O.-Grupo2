@@ -34,7 +34,6 @@ void Process::set_pages(page *pages){
 }
 
 void Process::update_map_entry(int logical, int physical){
-    page_map *curr = map;
     map[logical].physical = physical;
 }
 
