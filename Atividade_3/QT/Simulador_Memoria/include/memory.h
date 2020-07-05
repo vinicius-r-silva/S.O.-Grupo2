@@ -6,15 +6,12 @@
 #include <inttypes.h>
 #include <stdio.h>
 
-struct page{
-    int pid;
-    int page_id;
-};
+#include "defines.h"
 
 class Memory{
 private:
 
-    page *pages;
+    page **pages;
 
     int8_t memType;
     int32_t size;

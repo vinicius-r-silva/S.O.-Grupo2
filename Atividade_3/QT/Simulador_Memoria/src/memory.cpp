@@ -12,14 +12,9 @@ Memory::Memory(int8_t memType, int32_t size, int32_t pageSize){
     this->pageSize = pageSize;
     this->qtdPages = size / pageSize;
 
-    this->pages = (page*)malloc(qtdPages * sizeof(page));
+    this->pages = (page**)malloc(qtdPages * sizeof(page*));
     for(int i = 0; i < qtdPages; i++){
-        this->pages[i].pid = -1;
-        this->pages[i].page_id = -1;
-    }
-    for(int i = 0; i < qtdPages/2; i++){
-        this->pages[i].pid = i;
-        this->pages[i].page_id = i;
+        this->pages[i] = nullptr;
     }
 }
 
@@ -80,10 +75,10 @@ char* Memory::print(){
 
         //print the line values
         do{
-            if(pages[i].pid == -1)  //if this memory address is unoccupied, print a blank space
+            if(pages[i] == nullptr || pages[i]->pid == -1)  //if this memory address is unoccupied, print a blank space
                 printf("              |");
             else                    //Otherwise, print the memory address data
-                printf("  P%d page %02d  |", pages[i].pid, pages[i].page_id);
+                printf("  P%d page %02d  |", pages[i]->pid, pages[i]->page_id);
 
             i++;
         }while(i % pagesPerLine != 0 && i < qtdPages);

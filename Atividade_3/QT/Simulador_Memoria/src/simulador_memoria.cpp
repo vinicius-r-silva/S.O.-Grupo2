@@ -205,7 +205,7 @@ void Simulador_Memoria::animationFinished(){
 
 void Simulador_Memoria::receiveCommand(int line, QString command){
     changeColor(line);
-    qDebug() << command;
+    //qDebug() << command;
 }
 
 void Simulador_Memoria::changeColor(int line){
