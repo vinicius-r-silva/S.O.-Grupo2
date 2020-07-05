@@ -61,10 +61,10 @@ char* Process::print(){
     printf("\n");
 }
 
-Process::Process(){
-    id = -1;
-    map = nullptr;
-}
+// Process::Process(){
+//     id = -1;
+//     map = nullptr;
+// }
 
 Process::~Process(){
     //free(map);
@@ -73,4 +73,8 @@ Process::~Process(){
 
 page_map* Process::get_map(){
     return map;
+}
+
+int Process::get_qtdPages(){
+    return qtdPages;
 }

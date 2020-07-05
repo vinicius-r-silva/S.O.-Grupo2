@@ -46,6 +46,22 @@ page **Memory::get_pages(){
     return pages;
 }
 
+void Memory::nullify(){
+    for(int i = 0; i < qtdPages; i++){
+        this->pages[i] = nullptr;
+    }
+}
+
+void Memory::clear_all(){
+    for(int i = 0; i < qtdPages; i++){
+        if(pages[i] == nullptr)
+            continue;
+            
+        free(pages[i]);
+        pages[i] = nullptr;
+    }
+}
+
 //print the memory pages
 void Memory::print(char* str){
     int i = 0; 

@@ -39,7 +39,7 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
     QObject::connect(animation, SIGNAL(finished()), this, SLOT(animationFinished()));
     QObject::connect(animation, SIGNAL(sendCommand(int,QString)), this, SLOT(receiveCommand(int,QString)));
 
-    mmu = new MemoryManagement(32, 32, 4);
+    mmu = new MemoryManagement(32768, 32768, 4096);
 }
 
 Simulador_Memoria::~Simulador_Memoria(){
@@ -178,6 +178,17 @@ void Simulador_Memoria::on_b_play_clicked(){
     ui->b_play->setEnabled(false);
     animation->setPausing(false);
 
+    mmu->clean_all();
+
+    char result[2000];
+    mmu->get_ram(result);
+    ui->te_RAM->setText(result);
+
+    mmu->get_disk(result);
+    ui->te_disk->setText(result);
+
+    ui->te_warning->setText(mmu->get_warning());
+
     if(tp->activeThreadCount() == 0){
         _opHtml = ui->te_commands->toHtml();
         animation->setRunning(true);
@@ -221,8 +232,8 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
     }
     else{
         qDebug() << "pid: " << cmd.pid << ", action: " << cmd.action << ", arg: " << cmd.arg << "\n";
-        if(cmd.action == 'C' && cmd.pid == 1){
-            mmu->create_process(1, 4);
+        if(cmd.action == 'C'){
+            mmu->create_process(cmd.pid, cmd.arg);
             qDebug() << "processo criado\n";
         }
 

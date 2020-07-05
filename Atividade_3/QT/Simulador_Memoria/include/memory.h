@@ -30,6 +30,9 @@ public:
 
     page **get_pages();
 
+    void nullify();
+    void clear_all();
+
     void print(char* str);
 };
 
