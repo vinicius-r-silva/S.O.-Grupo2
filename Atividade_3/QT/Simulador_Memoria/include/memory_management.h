@@ -61,6 +61,7 @@ public:
 
     std::string get_ram();
     std::string get_disk();
+    std::string get_proTable();
     char* get_warning();
 
 

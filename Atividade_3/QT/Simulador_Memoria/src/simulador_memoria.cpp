@@ -50,8 +50,6 @@ void Simulador_Memoria::readFile(){
     QFile file(":/operations.txt");
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        if(!file.exists())
-            QMessageBox::warning(this, tr("ERROR BOX"), tr("Arquivo não EXISTE."));
         QMessageBox::warning(this, tr("ERROR BOX"), tr("Arquivo não pode ser aberto."));
         return;
     }
@@ -238,6 +236,7 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
 
         ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));
         ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
+        ui->te_pagTable->setText(QString::fromStdString(mmu->get_proTable()));
         ui->te_warning->setText(mmu->get_warning());
 
     }

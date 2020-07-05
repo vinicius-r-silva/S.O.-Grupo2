@@ -7,5 +7,6 @@
 #include "stdio.h"
 
 bool read_comando(comando *acao, char* string);
+void to_binary(int a, char *bin, int size);
 
 #endif //INTERPRETER_H

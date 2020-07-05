@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "defines.h"
+#include "interpreter.h"
 
 class Memory{
 private:
@@ -19,7 +20,6 @@ private:
 
     int32_t pageSize;
     int32_t qtdPages;
-    void to_binary(int a, char *bin, int size);
 
 public:
     Memory(int8_t memType, int32_t size, int32_t pageSize);
