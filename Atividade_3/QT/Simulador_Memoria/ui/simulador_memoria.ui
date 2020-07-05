@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1034</width>
+    <width>965</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,8 +19,13 @@
      <x>20</x>
      <y>10</y>
      <width>251</width>
-     <height>221</height>
+     <height>181</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="title">
     <string>Dados Iniciais</string>
@@ -28,11 +33,16 @@
    <widget class="QPushButton" name="b_refreshPar">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>180</y>
+      <x>50</x>
+      <y>150</y>
       <width>131</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Aplicar</string>
@@ -42,53 +52,112 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>20</y>
       <width>231</width>
       <height>125</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
+    <property name="opaqueResize">
+     <bool>true</bool>
+    </property>
+    <property name="childrenCollapsible">
+     <bool>true</bool>
+    </property>
     <widget class="QSplitter" name="splitter_2">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QLabel" name="l_pgSize">
+     <widget class="QLabel" name="l_pagSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string> Tamanho da página:</string>
       </property>
      </widget>
      <widget class="QLabel" name="l_adsSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Tamanho do endereço:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="l_allocPg">
-      <property name="text">
-       <string>Páginas alocadas:</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="l_ramSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Tamanho da RAM:</string>
+       <string>Tamanho da RAM(kB):</string>
       </property>
      </widget>
      <widget class="QLabel" name="l_diskSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Tamanho do disco:</string>
+       <string>Tamanho do disco(kB):</string>
       </property>
      </widget>
     </widget>
     <widget class="QSplitter" name="splitter">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QLineEdit" name="le_pgSize"/>
-     <widget class="QLineEdit" name="le_adsSize"/>
-     <widget class="QLineEdit" name="le_allocPg"/>
-     <widget class="QLineEdit" name="le_ramSize"/>
-     <widget class="QLineEdit" name="le_diskSize"/>
+     <widget class="QLineEdit" name="le_pagSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_adsSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_ramSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_diskSize">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -96,10 +165,15 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>320</y>
+     <y>400</y>
      <width>251</width>
-     <height>251</height>
+     <height>181</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="title">
     <string>Autores</string>
@@ -113,6 +187,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Gabriel Soares Gama</string>
     </property>
@@ -121,10 +200,15 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>160</y>
+      <y>120</y>
       <width>231</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Vinícius Ribeiro da Silva</string>
@@ -134,42 +218,21 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>70</y>
       <width>231</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Marcos Antonio Victor Arce</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>180</y>
-      <width>231</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>10828141</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>231</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>10684621</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -178,117 +241,58 @@
       <height>41</height>
      </rect>
     </property>
-    <property name="text">
-     <string>10716511</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>-70</y>
-      <width>231</width>
-      <height>41</height>
-     </rect>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
-     <string>gabriel_gama@usp.br</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>231</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>gabriel_gama@usp.br</string>
+     <string>      gabriel_gama@usp.br</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
+      <y>90</y>
       <width>231</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>marcosarce@usp.br</string>
+     <string>      marcosarce@usp.br</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>140</y>
       <width>231</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>vinicius.r@usp.br</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>10</y>
-     <width>461</width>
-     <height>281</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>RAM</string>
-   </property>
-   <widget class="QTextEdit" name="te_RAM">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>461</width>
-      <height>261</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_4">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>300</y>
-     <width>461</width>
-     <height>281</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>DISCO</string>
-   </property>
-   <widget class="QTextEdit" name="te_disk">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>461</width>
-      <height>261</height>
-     </rect>
+     <string>      vinicius.r@usp.br</string>
     </property>
    </widget>
   </widget>
   <widget class="QTextEdit" name="te_commands">
    <property name="geometry">
     <rect>
-     <x>820</x>
+     <x>760</x>
      <y>100</y>
      <width>191</width>
-     <height>481</height>
+     <height>261</height>
     </rect>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
    </property>
    <property name="html">
     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -301,7 +305,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="b_play">
    <property name="geometry">
     <rect>
-     <x>820</x>
+     <x>760</x>
      <y>30</y>
      <width>31</width>
      <height>25</height>
@@ -314,7 +318,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="b_next">
    <property name="geometry">
     <rect>
-     <x>900</x>
+     <x>840</x>
      <y>30</y>
      <width>31</width>
      <height>25</height>
@@ -327,7 +331,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="b_stop">
    <property name="geometry">
     <rect>
-     <x>980</x>
+     <x>920</x>
      <y>30</y>
      <width>31</width>
      <height>25</height>
@@ -337,44 +341,248 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalSlider">
+  <widget class="QSlider" name="sl_delay">
    <property name="geometry">
     <rect>
-     <x>820</x>
+     <x>760</x>
      <y>70</y>
      <width>191</width>
      <height>16</height>
     </rect>
    </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QGroupBox" name="groupBox_5">
    <property name="geometry">
     <rect>
-     <x>750</x>
-     <y>110</y>
-     <width>67</width>
-     <height>17</height>
+     <x>20</x>
+     <y>200</y>
+     <width>251</width>
+     <height>171</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
+   <property name="title">
+    <string>Monitor</string>
+   </property>
+   <widget class="QSplitter" name="splitter_5">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>30</y>
+      <width>58</width>
+      <height>125</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QLabel" name="l_susProc">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_exeProc">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_ramPag">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_diskPag">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_ramFree">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_memFree">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QSplitter" name="splitter_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>138</width>
+      <height>125</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Processos Suspensos:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Processos em Execução:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Páginas na RAM:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Páginas no disco:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Memória primaria livre:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>Total memória livre:</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QGroupBox" name="groupBox_6">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>250</y>
-     <width>89</width>
-     <height>25</height>
+     <x>760</x>
+     <y>370</y>
+     <width>191</width>
+     <height>211</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TESTE</string>
+   <property name="title">
+    <string>AVISO</string>
    </property>
+   <widget class="QTextEdit" name="te_warning">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>191</width>
+      <height>191</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>10</y>
+     <width>471</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Tabela de Páginas</string>
+    </attribute>
+    <widget class="QTextEdit" name="te_pagTable">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>471</width>
+       <height>551</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Visão Geral</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>461</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>RAM</string>
+     </property>
+     <widget class="QTextEdit" name="te_RAM">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>461</width>
+        <height>251</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>280</y>
+       <width>461</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>DISCO</string>
+     </property>
+     <widget class="QTextEdit" name="te_disk">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>461</width>
+        <height>251</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -2,8 +2,7 @@
 
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     QApplication a(argc, argv);
     Simulador_Memoria w;
     w.show();
