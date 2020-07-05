@@ -13,7 +13,7 @@ private:
 
 public:
     Process(int id, int size, int pageSize);
-    Process();
+    // Process();
     ~Process();
 
     page_map *get_map();
@@ -22,6 +22,8 @@ public:
 
     int get_logical(int physical);
     void replace_physical(int src, int dst);
+
+    int get_qtdPages();
 
     char* print();
 };

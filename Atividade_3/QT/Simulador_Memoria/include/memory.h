@@ -32,6 +32,10 @@ public:
     page **get_pages();
 
     std::string print();
+
+    void nullify();
+    void clear_all();
+
 };
 
 #endif //MEMORY_H

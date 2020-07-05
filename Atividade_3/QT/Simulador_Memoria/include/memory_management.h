@@ -6,7 +6,7 @@
 #include "process.h"
 
 struct process_list{
-    Process process;
+    Process *process;
     process_list *next;
     process_list *prev;
 };
@@ -24,6 +24,7 @@ private:
     char* warning;
     int ramSize;
     int diskSize;
+    int pageSize;
 
     int ramPagesCount;
     int diskPagesCount;
@@ -43,7 +44,7 @@ private:
     waiting_process *waiting_processes;
 
 
-    int addPage(int pid, int page_id);
+    int add_page_ram(page *new_page);
     void add_wating_process(int pid, int size);
 
 public:
@@ -53,6 +54,9 @@ public:
     std::string get_ram();
     std::string get_disk();
     char* get_warning();
+
+
+    void clean_all();
 
     void create_process(int id, int size);
 };
