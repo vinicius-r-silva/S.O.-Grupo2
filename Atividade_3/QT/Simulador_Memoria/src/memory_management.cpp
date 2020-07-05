@@ -252,9 +252,11 @@ std::string MemoryManagement::get_disk(){
 std::string MemoryManagement::get_proTable(){
     std::string text;
 
+    if(processes == nullptr)
+        return text;
+
     for(process_list* ptr = processes; ptr->next != nullptr; ptr = ptr->next){
         text.append(ptr->process->print());
-
     }
 
     return text;
