@@ -87,15 +87,15 @@ void MemoryManagement::create_process(int id, int size){
         return;
     }
 
-    if(search_active_process(id) == nullptr){
-        sprintf(warning, "Processo com ID %d ja existe", id);
-        return;
-    }
+//    if(search_active_process(id) == nullptr){
+//        sprintf(warning, "Processo com ID %d ja existe", id);
+//        return;
+//    }
 
-    if(search_waiting_process(id) == nullptr){
-        sprintf(warning, "Processo com ID %d ja existe, e esta na lista de espera", id);
-        return;
-    }
+//    if(search_waiting_process(id) == nullptr){
+//        sprintf(warning, "Processo com ID %d ja existe, e esta na lista de espera", id);
+//        return;
+//    }
 
     Process *process = new Process(id, size, pageSize);
     process_list *novo = (process_list*)malloc(sizeof(process_list));
@@ -103,28 +103,24 @@ void MemoryManagement::create_process(int id, int size){
     novo->next = nullptr;
     novo->prev = nullptr;
 
-    if(processes == nullptr)
+    process_list *ptr = processes;
+    process_list *prev = nullptr;
+
+    while(ptr != nullptr && novo->process->get_Id() > ptr->process->get_Id()){
+        prev = ptr;
+        ptr = ptr->next;
+    }
+
+    if(prev == nullptr){
+        novo->next = processes;
         processes = novo;
-    else{
-        process_list *ptr = processes;
+    }else{
+        novo->next = ptr;
+        novo->prev = prev;
+        prev->next = novo;
 
-        while(ptr->next != nullptr && novo->process->get_Id() < ptr->process->get_Id())
-            ptr = ptr->next;
-
-        if(ptr->next == nullptr && novo->process->get_Id() < ptr->process->get_Id()){
-            ptr->next = novo;
-            novo->prev = ptr;
-            novo->next = nullptr;
-        }else if(ptr->next == nullptr){
-            novo->next = ptr;
-            novo->prev = ptr->prev;
+        if(ptr != nullptr){
             ptr->prev = novo;
-            ptr->next = nullptr;
-        }else{
-            novo->prev = ptr;
-            novo->next = ptr->next;
-            novo->next->prev = novo;
-            ptr->next = novo;
         }
     }
 
@@ -255,8 +251,11 @@ std::string MemoryManagement::get_proTable(){
     if(processes == nullptr)
         return text;
 
-    for(process_list* ptr = processes; ptr->next != nullptr; ptr = ptr->next){
+    process_list* ptr = processes;
+
+    while(ptr != nullptr){
         text.append(ptr->process->print());
+        ptr = ptr->next;
     }
 
     return text;

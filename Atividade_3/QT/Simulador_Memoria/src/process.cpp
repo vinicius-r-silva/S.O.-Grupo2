@@ -61,8 +61,8 @@ std::string Process::print(){
 
     //----------------------- printing Header ---------------------/
 
-    str.append("############################################################\n");
-    str.append("                        PROCESSO ");
+    str.append("\n#########################################################\n");
+    str.append("                       PROCESSO ");
     str.append(std::to_string(id));
     str.append("\n");
     str.append("Offset         ");
@@ -108,7 +108,6 @@ std::string Process::print(){
 
         if(i < qtdPages)
             str.append("\n");
-        str.append("\n");
     }
 
     //If the grid isn't finished, show that the current address don't exists
