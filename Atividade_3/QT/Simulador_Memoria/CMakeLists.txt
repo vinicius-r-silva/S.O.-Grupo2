@@ -17,8 +17,11 @@ add_executable(Simulador_Memoria
   src/main.cpp
   src/simulador_memoria.cpp
   src/memory.cpp
+  src/memory_management.cpp
   include/memory.h
   include/simulador_memoria.h
+  include/memory_management.h
+  include/defines.h
   ui/simulador_memoria.ui
 )
 

@@ -11,8 +11,7 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent)
     mem.print();
 }
 
-Simulador_Memoria::~Simulador_Memoria()
-{
+Simulador_Memoria::~Simulador_Memoria(){
     delete ui;
 }
 
