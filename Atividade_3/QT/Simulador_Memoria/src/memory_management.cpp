@@ -87,15 +87,15 @@ void MemoryManagement::create_process(int id, int size){
         return;
     }
 
-//    if(search_active_process(id) == nullptr){
-//        sprintf(warning, "Processo com ID %d ja existe", id);
-//        return;
-//    }
+   if(search_active_process(id) != nullptr){
+       sprintf(warning, "Processo com ID %d ja existe", id);
+       return;
+   }
 
-//    if(search_waiting_process(id) == nullptr){
-//        sprintf(warning, "Processo com ID %d ja existe, e esta na lista de espera", id);
-//        return;
-//    }
+   if(search_waiting_process(id) != nullptr){
+       sprintf(warning, "Processo com ID %d ja existe, e esta na lista de espera", id);
+       return;
+   }
 
     Process *process = new Process(id, size, pageSize);
     process_list *novo = (process_list*)malloc(sizeof(process_list));
