@@ -198,7 +198,7 @@ void MemoryManagement::kill_process(int id){
                 pageRemoved = remove_page_ram(map[i].ref);
             else
                 pageRemoved = remove_page_disk(id, i);
-                
+
             free(pageRemoved);
         }
         sprintf(warning, "Processo com ID %d foi removido", id);
@@ -263,6 +263,8 @@ int MemoryManagement::add_page_ram(page *new_page){
         for(i = 0; i < ramPagesCount; i++){
         
             page* page2remove = remove_page_ram(lruEnd);
+            process_list *pl = search_active_process(page2remove->pid);
+            pl->process->update_map_entry(page2remove->page_id, -1);
 
             new_page->next_lru = lruBegin;
             lruBegin->prev_lru = new_page;
@@ -324,6 +326,9 @@ page* MemoryManagement::remove_page_disk(int pid, int page_id){
 }
 
 page* MemoryManagement::remove_page_ram(page* page2remove){
+    if(page2remove->page_physical < 0)
+        return nullptr;
+
     if(page2remove == lruBegin){
         lruBegin = page2remove->next_lru;
     }
@@ -335,6 +340,9 @@ page* MemoryManagement::remove_page_ram(page* page2remove){
     
     page2remove->next_lru = nullptr;
     page2remove->prev_lru = nullptr;
+
+    page **ramPages = ram->get_pages();
+    ramPages[page2remove->page_physical] = nullptr;
 
     ramAvailable += pageSize;
     return page2remove;

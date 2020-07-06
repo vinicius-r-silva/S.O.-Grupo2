@@ -15,6 +15,8 @@ bool read_comando(comando *acao, char* string){
         return FAILURE;
 
     int pid;
+    int arg;
+    char action;
     sscanf(string + 1, "%d", &pid);
 
     for(i = 2; i < size && string[i] == ' '; i++);
@@ -22,19 +24,23 @@ bool read_comando(comando *acao, char* string){
         return FAILURE;
 
     // i++;
-    char action = string[i];
+    action = string[i];
 
-    i++;
-    for(; i < size && string[i] != ' '; i++);
-    if(i == size)
-        return FAILURE;
+    if(action == 'K' || action == 'P' || action == 'I'){
+        arg = 0;
+    }
+    else{
+        i++;
+        for(; i < size && string[i] != ' '; i++);
+        if(i == size)
+            return FAILURE;
 
-    i++;
-    if(string[i] <'0' || string[i] > '9')
-        return FAILURE;
+        i++;
+        if(string[i] <'0' || string[i] > '9')
+            return FAILURE;
 
-    int arg;
-    sscanf(string + i, "%d", &arg);
+        sscanf(string + i, "%d", &arg);
+    }
 
     acao->pid = pid;
     acao->action = action;
