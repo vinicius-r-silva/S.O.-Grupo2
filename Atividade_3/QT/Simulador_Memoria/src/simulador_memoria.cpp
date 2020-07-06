@@ -200,13 +200,12 @@ void Simulador_Memoria::on_b_next_clicked(){
 void Simulador_Memoria::on_b_stop_clicked(){
     animation->setRunning(false);
     animation->setPausing(false);
-
-    mmu->clean_all();
 }
 
 void Simulador_Memoria::animationFinished(){
     ui->b_play->setEnabled(true);
     animation->setLine(0);
+    mmu->clean_all();
     ui->te_commands->setHtml(_opHtml);
 }
 
@@ -321,7 +320,9 @@ void Simulador_Memoria::updateMonitor(){
     int diskAv = mmu->getDiskAv();
     int ramProc = mmu->get_processes_at_ram();
     int diskProc = mmu->get_processes_at_disk();
+    int pagFaults = mmu->getQtdPageFaults();
 
+    ui->l_pagFaults->setText(QString::number(pagFaults));
     ui->l_ramProc->setText(QString::number(ramProc));
     ui->l_diskProc->setText(QString::number(diskProc));
     ui->l_ramPag->setText(QString::number((_ramSize - ramAv)/_pagSize));

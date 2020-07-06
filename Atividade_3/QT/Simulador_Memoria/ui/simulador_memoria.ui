@@ -349,7 +349,7 @@ p, li { white-space: pre-wrap; }
      <x>20</x>
      <y>230</y>
      <width>251</width>
-     <height>151</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="font">
@@ -366,16 +366,26 @@ p, li { white-space: pre-wrap; }
       <x>10</x>
       <y>30</y>
       <width>221</width>
-      <height>111</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
-    <widget class="QSplitter" name="splitter_4">
+    <widget class="QSplitter" name="splitter_5">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <widget class="QLabel" name="label_14">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PageFaults</string>
+      </property>
+     </widget>
      <widget class="QLabel" name="label_13">
       <property name="font">
        <font>
@@ -412,10 +422,18 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-    <widget class="QSplitter" name="splitter_5">
+    <widget class="QSplitter" name="splitter_4">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <widget class="QLabel" name="l_pagFaults">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <widget class="QLabel" name="l_ramProc">
       <property name="text">
        <string/>
