@@ -34,6 +34,9 @@ private:
 
     int processesAtRam;
     int processesAtDisk;
+    int processesAtBoth;
+
+    int replacement;
 
     Memory *ram;
     Memory *disk;
@@ -46,15 +49,21 @@ private:
 
 
     int add_page_ram(page *new_page);
+    page* remove_page_ram(int physical);
+    page* remove_page_ram(page* page2remove);
 
     int insert_page_disk(page* new_page);
     page* remove_page_disk(int pid, int page_id);
 
     void add_wating_process(int pid, int size);
-
+    void activate_waiting_processes();
+    
+    void update_lru_order();
 
     process_list* search_active_process(int id);
     waiting_process* search_waiting_process(int id);
+
+    void move_to_begin_lru(int page_id, int pid);
 
 public:
     MemoryManagement(int ramSize, int diskSize, int pageSize);
@@ -65,12 +74,19 @@ public:
     std::string get_proTable();
     char* get_warning();
 
-    int get_ordem_lru(int pid, int page_id);
-
     void clean_all();
 
     void create_process(int id, int size);
     void kill_process(int id);
+
+    void acesso_memoria(int pid, int byte, const char* acao);
+    void operacao(int pid,const char* acao);
+
+    int get_processes_at_ram();
+    int get_processes_at_disk();
+
+    void set_page_replacement(int replacement);
+    int get_page_replacement();
 };
 
 

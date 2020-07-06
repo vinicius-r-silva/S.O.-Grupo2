@@ -11,7 +11,14 @@ class Process {
 private:
     int id;
     int qtdPages;
+    int size;
     page_map *map;
+
+    int pagesAtRam;
+    int pagesAtDisk;
+    
+    int lru_order;
+    int referenced;
 
 public:
     Process(int id, int size, int pageSize);
@@ -28,6 +35,12 @@ public:
     int get_qtdPages();
 
     int get_Id();
+    int get_size();
+
+    int get_pagesAtRam();
+    void set_pagesAtRam(int pagesAtRam);
+    int get_pagesAtDisk();
+    void set_pagesAtDisk(int pagesAtDisk);
 
     std::string print();
 };

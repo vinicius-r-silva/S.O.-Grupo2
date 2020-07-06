@@ -32,7 +32,7 @@ Memory::~Memory(){
 
 int8_t Memory::get_type(){return memType;}
 
-int8_t Memory::get_size(){return size;}
+int32_t Memory::get_size(){return size;}
 
 page **Memory::get_pages(){
     return pages;
@@ -122,4 +122,9 @@ std::string Memory::print(){
     str.append("\n");
 
     return str;
+}
+
+
+int32_t Memory::get_qtdPages(){
+    return qtdPages;
 }

@@ -7,6 +7,9 @@
 #define RAM 0
 #define DISK 1
 
+#define LRU 0
+#define RELOGIO 1
+
 struct comando{
     int pid;
     char action;
@@ -19,6 +22,7 @@ struct page{
     int page_physical;
 
     int references;
+    int lru_order;
 
     page *next_lru;
     page *prev_lru;

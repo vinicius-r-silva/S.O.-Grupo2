@@ -3,6 +3,7 @@
 Process::Process(int id, int size, int pageSize){
     int i = 0;
     this->id = id;
+    this->size = size;
     this->qtdPages = (size + pageSize - 1) / pageSize;
 
     map = (page_map*)malloc(this->qtdPages * sizeof(page_map));
@@ -10,6 +11,9 @@ Process::Process(int id, int size, int pageSize){
         map[i].logical = -1;
         map[i].physical = -1;
     }
+
+    this->pagesAtRam = 0;
+    this->pagesAtDisk = 0;
 }
 
 void Process::set_pages(page *pages){
@@ -136,4 +140,25 @@ int Process::get_qtdPages(){
 
 int Process::get_Id(){
     return id;
+}
+
+
+int Process::get_size(){
+    return size;
+}
+
+int Process::get_pagesAtRam(){
+    return pagesAtRam;
+}
+
+void Process::set_pagesAtRam(int pagesAtRam){
+    this->pagesAtRam = pagesAtRam;
+}
+
+int Process::get_pagesAtDisk(){
+    return pagesAtDisk;
+}
+
+void Process::set_pagesAtDisk(int pagesAtDisk){
+    this->pagesAtDisk = pagesAtDisk;
 }
