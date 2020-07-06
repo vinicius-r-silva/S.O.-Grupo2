@@ -27,7 +27,8 @@ public:
     ~Memory();
 
     int8_t get_type();
-    int8_t get_size();
+    int32_t get_size();
+    int32_t get_qtdPages();
 
     page **get_pages();
 

@@ -19,6 +19,7 @@ struct page{
     int page_physical;
 
     int references;
+    int lru_order;
 
     page *next_lru;
     page *prev_lru;
