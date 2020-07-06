@@ -525,6 +525,13 @@ void MemoryManagement::updateSizes(int ramSize, int diskSize, int pageSize){
     this->ramSize = ramSize;
     this->diskSize = diskSize;
     this->pageSize = pageSize;
+
+    ramPagesCount = ramSize / pageSize;
+    diskPagesCount = diskSize / pageSize;
+
+    ramAvailable = ramSize;
+    diskAvailable = diskSize;
+
     ram->updateSizes(ramSize, pageSize);
     disk->updateSizes(diskSize, pageSize);
 }
