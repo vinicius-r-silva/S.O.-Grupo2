@@ -24,6 +24,8 @@ MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize, int 
     lruEnd = nullptr;
     waiting_processes = nullptr;
 
+    relPos = 0;
+
     warning = (char*)calloc(1000, sizeof(char));
     sprintf(warning, "no action executed");
 }
@@ -132,7 +134,7 @@ void MemoryManagement::create_process(int id, int size){
         page *new_page = (page*)malloc(sizeof(page));
         new_page->pid = id;
         new_page->page_id = i;
-        new_page->references = 0;
+        new_page->references = 1;
         new_page->page_physical = -1;
         new_page->next_lru = nullptr;
         new_page->prev_lru = nullptr;
@@ -238,6 +240,7 @@ void MemoryManagement::update_lru_order(){
 
 int MemoryManagement::add_page_ram(page *new_page){
     int i = 0;
+    int physical_address = 0;
     page **ramPages = ram->get_pages(); 
     if(ramAvailable > 0){
         for(i = 0; i < ramPagesCount; i++){
@@ -258,32 +261,32 @@ int MemoryManagement::add_page_ram(page *new_page){
                 break;
             }
         }
+        physical_address = i;
     }
     else{
-        for(i = 0; i < ramPagesCount; i++){
+        page* page2remove = remove_page_ram(get_page2remove());
+        process_list *pl = search_active_process(page2remove->pid);
+        pl->process->update_map_entry(page2remove->page_id, -1);
+
+        physical_address = page2remove->page_physical;
+
+        new_page->next_lru = lruBegin;
+        lruBegin->prev_lru = new_page;
+        lruBegin = new_page;
+
+        if(insert_page_disk(page2remove) == FAILURE)
+            return -1;
         
-            page* page2remove = remove_page_ram(lruEnd);
-            process_list *pl = search_active_process(page2remove->pid);
-            pl->process->update_map_entry(page2remove->page_id, -1);
+        diskAvailable-=pageSize;
 
-            new_page->next_lru = lruBegin;
-            lruBegin->prev_lru = new_page;
-            lruBegin = new_page;
-
-            if(insert_page_disk(page2remove) == FAILURE)
-                return -1;
-            
-            diskAvailable-=pageSize;
-
-            ramPages[page2remove->page_physical] = new_page;
-            new_page->page_physical = page2remove->page_physical;
-            page2remove->page_physical = -1;
-
-            break;
-        }
+        ramPages[page2remove->page_physical] = new_page;
+        new_page->page_physical = page2remove->page_physical;
+        page2remove->page_physical = -1;
+        page2remove->references = 0;
+        ramAvailable -= pageSize;
     }
     if(i == ramPagesCount) return -1;
-    return i;
+    return physical_address;
 }
 
 int MemoryManagement::insert_page_disk(page* new_page){
@@ -323,6 +326,20 @@ page* MemoryManagement::remove_page_disk(int pid, int page_id){
     diskPages[i] = nullptr;
     diskAvailable += pageSize;
     return curr;
+}
+
+page* MemoryManagement::get_page2remove(){
+    if(replacement == LRU)
+        return lruEnd;
+    
+    page **ramPages = ram->get_pages();
+    while(true){
+        if(ramPages[relPos]->references == 0)
+            return ramPages[relPos];
+        
+        ramPages[relPos]->references = 0;
+        relPos++;
+    }
 }
 
 page* MemoryManagement::remove_page_ram(page* page2remove){
@@ -405,6 +422,7 @@ void MemoryManagement::acesso_memoria(int pid, int byte,const char* acao){
         page_map *map = pl->process->get_map();
         if(map[Logical].physical >= 0){
             sprintf(warning, "%s feita Sucesso.\nO endereço lógico %d do processo %d se encontra na página lógica %d, que por sua vez se encontra na página física %d", acao, byte, pid, Logical, map[Logical].physical);
+            map[Logical].ref->references = 1;
             move_to_begin_lru(Logical, pid);
             return;
         }
@@ -415,6 +433,7 @@ void MemoryManagement::acesso_memoria(int pid, int byte,const char* acao){
             return;
         }
 
+        wantedPage->references = 1;
         int physical = add_page_ram(wantedPage);
         pl->process->update_map_entry(Logical, physical);
         sprintf(warning, "Page fault\nO endereço lógico %d do processo %d se encontra na página lógica %d\nA página se encontrava no disco e foi movida para a página lógica %d da ram\n", byte, pid, Logical, physical);
