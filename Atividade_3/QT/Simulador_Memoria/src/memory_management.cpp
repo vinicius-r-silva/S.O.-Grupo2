@@ -339,6 +339,8 @@ page* MemoryManagement::get_page2remove(){
         
         ramPages[relPos]->references = 0;
         relPos++;
+        if(relPos >= ramPagesCount)
+            relPos = 0;
     }
 }
 
