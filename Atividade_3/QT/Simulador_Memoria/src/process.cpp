@@ -61,7 +61,7 @@ void Process::replace_physical(int src, int dst){
     map[logical].physical = dst;
 }
 
-std::string Process::print(){
+std::string Process::print(int replacement){
     std::string str;
     int pagesPerLine = 3;
     int i;
@@ -101,9 +101,10 @@ std::string Process::print(){
             if(map[i].physical < 0){
                 str.append("     DISCO      |");
             }else{
+                int repPag = (replacement == LRU)? map[i].ref->lru_order : map[i].ref->references;
                 char buff2[20];
-                sprintf(buff2, " P:%02d L:%02d R:%02d |", map[i].physical, 0, 0);
-                sprintf(buff2, " P:%02d L:%02d R:%02d |", map[i].physical, 0, 0);
+                //sprintf(buff2, " P:%02d L:%02d R:%02d |", map[i].physical, );
+                sprintf(buff2, "    %02d   (%02d)   |", map[i].physical, repPag);
                 str.append(buff2);
             }
 

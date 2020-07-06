@@ -364,7 +364,7 @@ std::string MemoryManagement::get_proTable(){
     process_list* ptr = processes;
 
     while(ptr != nullptr){
-        text.append(ptr->process->print());
+        text.append(ptr->process->print(replacement));
         ptr = ptr->next;
     }
 

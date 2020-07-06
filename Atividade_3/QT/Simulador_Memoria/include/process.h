@@ -40,7 +40,7 @@ public:
     int get_pagesAtDisk();
     void set_pagesAtDisk(int pagesAtDisk);
 
-    std::string print();
+    std::string print(int replacement);
 };
 
 #endif //PROCESS_H

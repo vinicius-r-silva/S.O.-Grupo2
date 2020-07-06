@@ -32,6 +32,8 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
 
     ui->sl_delay->setValue(50);
 
+    ui->rb_lru->setChecked(true);
+
     tp = new QThreadPool();
     tp->setExpiryTimeout(-1);
 
@@ -206,7 +208,7 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
         ui->te_warning->setText("Comando incorreto");
     }
     else{
-        qDebug() << "pid: " << cmd.pid << ", action: " << cmd.action << ", arg: " << cmd.arg << "\n";
+        //qDebug() << "pid: " << cmd.pid << ", action: " << cmd.action << ", arg: " << cmd.arg << "\n";
         switch (cmd.action){
         case 'C':
             mmu->create_process(cmd.pid, cmd.arg);
