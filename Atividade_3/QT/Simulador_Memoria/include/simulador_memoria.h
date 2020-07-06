@@ -17,7 +17,7 @@ public:
     ~Simulador_Memoria();
 
 private slots:
-    void on_b_refreshPar_pressed();
+    void on_b_refreshPar_clicked();
 
     void on_le_pagSize_textChanged(const QString &arg1);
     void on_le_ramSize_textChanged(const QString &arg1);
@@ -35,7 +35,6 @@ private slots:
     void on_te_commands_textChanged();
 
     void on_rb_lru_clicked();
-
     void on_rb_clock_clicked();
 
 private:
@@ -51,6 +50,10 @@ private:
     int _ramSize;
     int _diskSize;
 
+    int _prevPS;
+    int _prevRS;
+    int _prevDS;
+
     QStringList _commands;
     QString _commandsText;
     QString _opHtml;
@@ -59,5 +62,6 @@ private:
 
     void readFile();
     void changeColor(int line);
+    void updateMonitor();
 };
 #endif // SIMULADOR_MEMORIA_H

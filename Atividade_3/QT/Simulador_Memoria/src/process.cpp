@@ -99,7 +99,7 @@ std::string Process::print(int replacement){
         //print the line values
         do{
             if(map[i].physical < 0){
-                str.append("     DISCO      |");
+                str.append("      DISCO     |");
             }else{
                 int repPag = (replacement == LRU)? map[i].ref->lru_order : map[i].ref->references;
                 char buff2[20];

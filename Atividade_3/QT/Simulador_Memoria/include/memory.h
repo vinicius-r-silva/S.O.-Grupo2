@@ -37,6 +37,8 @@ public:
     void nullify();
     void clear_all();
 
+    void updateSizes(int32_t size, int32_t pageSize);
+
 };
 
 #endif //MEMORY_H
