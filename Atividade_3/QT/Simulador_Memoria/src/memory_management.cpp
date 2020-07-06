@@ -18,6 +18,7 @@ MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize, int 
     this->processesAtDisk = 0;
 
     this->replacement = replacement;
+    this->qtdPageFaults = 0;
  
     processes = nullptr;
     lruBegin = nullptr;
@@ -439,6 +440,7 @@ void MemoryManagement::acesso_memoria(int pid, int byte,const char* acao){
         int physical = add_page_ram(wantedPage);
         pl->process->update_map_entry(Logical, physical);
         sprintf(warning, "Page fault\nO endereço lógico %d do processo %d se encontra na página lógica %d\nA página se encontrava no disco e foi movida para a página lógica %d da ram\n", byte, pid, Logical, physical);
+        qtdPageFaults++;    
         return;
     }
     
@@ -496,6 +498,7 @@ void MemoryManagement::clean_all(){
 
     ramAvailable = ramSize;
     diskAvailable = diskSize;
+    qtdPageFaults = 0;
 
     sprintf(warning, " ");
 }
@@ -536,4 +539,8 @@ void MemoryManagement::updateSizes(int ramSize, int diskSize, int pageSize){
 
     ram->updateSizes(ramSize, pageSize);
     disk->updateSizes(diskSize, pageSize);
+}
+
+int MemoryManagement::getQtdPageFaults(){
+    return qtdPageFaults;
 }

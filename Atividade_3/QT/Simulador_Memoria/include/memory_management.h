@@ -38,6 +38,8 @@ private:
     int replacement;
     int relPos;
 
+    int qtdPageFaults;
+
     Memory *ram;
     Memory *disk;
 
@@ -88,6 +90,7 @@ public:
     int get_processes_at_disk();
     int getRamAv();
     int getDiskAv();
+    int getQtdPageFaults();
 
     void set_page_replacement(int replacement);
     int get_page_replacement();
