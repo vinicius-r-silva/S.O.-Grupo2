@@ -8,7 +8,7 @@ Process::Process(int id, int size, int pageSize){
 
     map = (page_map*)malloc(this->qtdPages * sizeof(page_map));
     for(i = 0; i < this->qtdPages; i++){
-        map[i].logical = -1;
+        map[i].logical = i;
         map[i].physical = -1;
         map[i].ref = nullptr;
     }
