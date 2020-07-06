@@ -29,7 +29,6 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
     ui->le_ramSize->setText(QString::number(32));
     ui->le_diskSize->setText(QString::number(32));
     ui->le_pagSize->setText(QString::number(4));
-    ui->le_adsSize->setText(QString::number(8));
 
     ui->sl_delay->setValue(50);
 
@@ -79,11 +78,6 @@ void Simulador_Memoria::on_b_refreshPar_pressed(){
         wrong = true;
     }
 
-    if(ui->le_adsSize->text().isEmpty() || std::stoi(ui->le_adsSize->text().toStdString()) == 0){
-        ui->le_adsSize->setText(QString::number(_adsSize));
-        wrong = true;
-    }
-
     if(ui->le_ramSize->text().isEmpty() || std::stoi(ui->le_ramSize->text().toStdString()) == 0){
         ui->le_ramSize->setText(QString::number(_ramSize));
         wrong = true;
@@ -100,7 +94,6 @@ void Simulador_Memoria::on_b_refreshPar_pressed(){
     }
 
     std::cout << "Tamanho da Página: " << _pagSize << std::endl;
-    std::cout << "Tamanho do endereço: " << _adsSize << std::endl;
     std::cout << "Tamanho da RAM: " << _ramSize << std::endl;
     std::cout << "Tamanho do Disco: " << _diskSize << std::endl;
 }
@@ -120,21 +113,6 @@ void Simulador_Memoria::on_le_pagSize_textChanged(const QString &arg1){
 
         if(pagSize != _pagSize && pagSize != 0)
             _pagSize = pagSize;
-
-    }catch(std::invalid_argument e){
-    }catch(std::out_of_range e2){
-    }
-}
-
-void Simulador_Memoria::on_le_adsSize_textChanged(const QString &arg1){
-    std::string edit = arg1.toStdString();
-    int adsSize;
-
-    try{
-        adsSize = std::stoi(edit);
-
-        if(adsSize != _adsSize && adsSize != 0)
-            _adsSize = adsSize;
 
     }catch(std::invalid_argument e){
     }catch(std::out_of_range e2){
@@ -285,4 +263,12 @@ void Simulador_Memoria::on_te_commands_textChanged(){
 
     _commandsText = ui->te_commands->toPlainText();
     _commands = _commandsText.split(QRegExp("[\n]"),QString::SkipEmptyParts);
+}
+
+void Simulador_Memoria::on_rb_lru_clicked(){
+
+}
+
+void Simulador_Memoria::on_rb_clock_clicked(){
+
 }

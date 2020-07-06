@@ -20,7 +20,6 @@ private slots:
     void on_b_refreshPar_pressed();
 
     void on_le_pagSize_textChanged(const QString &arg1);
-    void on_le_adsSize_textChanged(const QString &arg1);
     void on_le_ramSize_textChanged(const QString &arg1);
     void on_le_diskSize_textChanged(const QString &arg1);
 
@@ -35,6 +34,8 @@ private slots:
 
     void on_te_commands_textChanged();
 
+    void on_rb_lru_clicked();
+
 private:
     Ui::Simulador_Memoria *ui;
     Animation *animation;
@@ -45,7 +46,6 @@ private:
     QThreadPool *tp;
 
     int _pagSize;
-    int _adsSize;
     int _ramSize;
     int _diskSize;
 
