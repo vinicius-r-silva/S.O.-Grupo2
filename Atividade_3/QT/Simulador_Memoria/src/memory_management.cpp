@@ -145,8 +145,25 @@ void MemoryManagement::create_process(int id, int size){
     sprintf(warning, "Processo %d, de tamanho %d, foi criado com sucesso", id, size);    
 }
 
+
 void MemoryManagement::kill_process(int id){
-    id++;
+    process_list *pl = nullptr;
+    pl = search_active_process(id);
+    if(pl != nullptr){
+
+        sprintf(warning, "Processo com ID %d foi removido", id);
+        return;
+    }
+
+    waiting_process *wp = nullptr;
+    wp = search_waiting_process(id);
+    if(wp != nullptr){
+        sprintf(warning, "Processo com ID %d, que estava na lista de espera, foi removido", id);
+        return;
+    }
+
+    sprintf(warning, "Processo com ID %d nao existe", id);
+    return;
 }
 
 int MemoryManagement::get_ordem_lru(int pid, int page_id){
@@ -232,6 +249,7 @@ int MemoryManagement::insert_page_disk(page* new_page){
     return SUCESS;    
 }
 
+//TODO
 page* MemoryManagement::remove_page_disk(int pid, int page_id){
     pid = pid + page_id;
     return nullptr;
