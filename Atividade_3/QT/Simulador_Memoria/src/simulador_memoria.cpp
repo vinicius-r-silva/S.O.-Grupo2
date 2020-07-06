@@ -229,9 +229,33 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
     }
     else{
         qDebug() << "pid: " << cmd.pid << ", action: " << cmd.action << ", arg: " << cmd.arg << "\n";
-        if(cmd.action == 'C'){
+        switch (cmd.action){
+        case 'C':
             mmu->create_process(cmd.pid, cmd.arg);
-            qDebug() << "processo criado\n";
+            break;
+
+        case 'K':
+            mmu->kill_process(cmd.pid);
+            break;
+
+        case 'R':
+            mmu->acesso_memoria(cmd.pid, cmd.arg, "leitura");
+            break;
+
+        case 'W':
+            mmu->acesso_memoria(cmd.pid, cmd.arg, "escrita");
+            break;
+
+        case 'P':
+            mmu->operacao(cmd.pid, "CPU");
+            break;
+
+        case 'I':
+            mmu->operacao(cmd.pid, "I/O");
+            break;
+        
+        default:
+            break;
         }
 
         ui->te_RAM->setText(QString::fromStdString(mmu->get_ram()));

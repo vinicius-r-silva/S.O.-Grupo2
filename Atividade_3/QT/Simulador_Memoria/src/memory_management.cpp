@@ -1,6 +1,6 @@
 #include "../include/memory_management.h"
 
-MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize){
+MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize, int replacement){
     ram = new Memory(RAM, ramSize, pageSize);
     disk = new Memory(DISK, diskSize, pageSize);
 
@@ -16,6 +16,8 @@ MemoryManagement::MemoryManagement(int ramSize, int diskSize, int pageSize){
 
     this->processesAtRam = 0;
     this->processesAtDisk = 0;
+
+    this->replacement = replacement;
  
     processes = nullptr;
     lruBegin = nullptr;
@@ -466,4 +468,12 @@ int MemoryManagement::get_processes_at_ram(){
 
 int MemoryManagement::get_processes_at_disk(){
     return processesAtDisk;
+}
+
+void MemoryManagement::set_page_replacement(int replacement){
+    this->replacement = replacement;
+}
+
+int MemoryManagement::get_page_replacement(){
+    return replacement;
 }

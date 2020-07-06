@@ -36,6 +36,8 @@ private:
     int processesAtDisk;
     int processesAtBoth;
 
+    int replacement;
+
     Memory *ram;
     Memory *disk;
 
@@ -82,6 +84,9 @@ public:
 
     int get_processes_at_ram();
     int get_processes_at_disk();
+
+    void set_page_replacement(int replacement);
+    int get_page_replacement();
 };
 
 
