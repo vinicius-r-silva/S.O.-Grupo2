@@ -16,8 +16,6 @@ private:
 
     int pagesAtRam;
     int pagesAtDisk;
-    
-    int referenced;
 
 public:
     Process(int id, int size, int pageSize);
