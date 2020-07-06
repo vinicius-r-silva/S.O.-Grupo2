@@ -16,9 +16,6 @@ private:
 
     int pagesAtRam;
     int pagesAtDisk;
-    
-    int lru_order;
-    int referenced;
 
 public:
     Process(int id, int size, int pageSize);

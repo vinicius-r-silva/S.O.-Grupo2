@@ -97,6 +97,7 @@ std::string Process::print(){
             }else{
                 char buff2[20];
                 sprintf(buff2, " P:%02d L:%02d R:%02d |", map[i].physical, 0, 0);
+                sprintf(buff2, " P:%02d L:%02d R:%02d |", map[i].physical, 0, 0);
                 str.append(buff2);
             }
 

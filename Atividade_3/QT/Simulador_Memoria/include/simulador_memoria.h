@@ -36,6 +36,8 @@ private slots:
 
     void on_rb_lru_clicked();
 
+    void on_rb_clock_clicked();
+
 private:
     Ui::Simulador_Memoria *ui;
     Animation *animation;

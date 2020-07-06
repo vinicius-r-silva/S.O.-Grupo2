@@ -290,9 +290,11 @@ void Simulador_Memoria::on_te_commands_textChanged(){
 }
 
 void Simulador_Memoria::on_rb_lru_clicked(){
-
+    mmu->set_page_replacement(LRU);
+    on_b_stop_clicked();
 }
 
 void Simulador_Memoria::on_rb_clock_clicked(){
-
+    mmu->set_page_replacement(RELOGIO);
+    on_b_stop_clicked();
 }
