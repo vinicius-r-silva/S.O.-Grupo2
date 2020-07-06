@@ -34,9 +34,9 @@ private:
 
     int processesAtRam;
     int processesAtDisk;
-    int processesAtBoth;
 
     int replacement;
+    int relPos;
 
     Memory *ram;
     Memory *disk;
@@ -64,6 +64,8 @@ private:
     waiting_process* search_waiting_process(int id);
 
     void move_to_begin_lru(int page_id, int pid);
+
+    page* get_page2remove();
 
 public:
     MemoryManagement(int ramSize, int diskSize, int pageSize, int replacement);
