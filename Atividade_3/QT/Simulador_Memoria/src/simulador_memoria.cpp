@@ -26,9 +26,13 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
 
     /////////////////////////
     //SET INITIAL PARAMETERS
-    ui->le_ramSize->setText(QString::number(32));
-    ui->le_diskSize->setText(QString::number(32));
-    ui->le_pagSize->setText(QString::number(4));
+    ui->le_ramSize->setText(QString::number(32768));
+    ui->le_diskSize->setText(QString::number(32768));
+    ui->le_pagSize->setText(QString::number(4096));
+
+    _prevRS = _ramSize;
+    _prevDS = _diskSize;
+    _prevPS = _pagSize;
 
     ui->sl_delay->setValue(50);
 
@@ -40,7 +44,7 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
     QObject::connect(animation, SIGNAL(finished()), this, SLOT(animationFinished()));
     QObject::connect(animation, SIGNAL(sendCommand(int,QString)), this, SLOT(receiveCommand(int,QString)));
 
-    mmu = new MemoryManagement(32768, 32768, 4096, LRU);
+    mmu = new MemoryManagement(_ramSize, _diskSize, _pagSize, LRU);
 }
 
 Simulador_Memoria::~Simulador_Memoria(){
@@ -72,20 +76,23 @@ void Simulador_Memoria::readFile(){
     file.close();
 }
 
-void Simulador_Memoria::on_b_refreshPar_pressed(){
+void Simulador_Memoria::on_b_refreshPar_clicked(){
     bool wrong = false;
 
     if(ui->le_pagSize->text().isEmpty() || std::stoi(ui->le_pagSize->text().toStdString()) == 0){
+        _pagSize = _prevPS;
         ui->le_pagSize->setText(QString::number(_pagSize));
         wrong = true;
     }
 
     if(ui->le_ramSize->text().isEmpty() || std::stoi(ui->le_ramSize->text().toStdString()) == 0){
+        _ramSize = _prevRS;
         ui->le_ramSize->setText(QString::number(_ramSize));
         wrong = true;
     }
 
     if(ui->le_diskSize->text().isEmpty() || std::stoi(ui->le_diskSize->text().toStdString()) == 0){
+        _diskSize = _prevDS;
         ui->le_diskSize->setText(QString::number(_diskSize));
         wrong = true;
     }
@@ -93,11 +100,24 @@ void Simulador_Memoria::on_b_refreshPar_pressed(){
     if(wrong){
         QMessageBox::warning(this, tr("ERROR BOX"), tr("Há parâmetro(s) vazio(s) e/ou nulo(s)"));
         return;
+    }else if((_ramSize != 0 && _ramSize%_pagSize != 0) || (_diskSize != 0 && _diskSize%_pagSize != 0)){
+            QMessageBox::warning(this, tr("ERROR BOX"), tr("Escolha um tamanho de página que seja divisível pelo tamanho do disco e pelo tamanho da RAM"));
+            _pagSize = _prevPS;
+            ui->le_pagSize->setText(QString::number(_pagSize));
+            _ramSize = _prevRS;
+            ui->le_ramSize->setText(QString::number(_ramSize));
+            _diskSize = _prevDS;
+            ui->le_diskSize->setText(QString::number(_diskSize));
+            return;
     }
 
-    std::cout << "Tamanho da Página: " << _pagSize << std::endl;
-    std::cout << "Tamanho da RAM: " << _ramSize << std::endl;
-    std::cout << "Tamanho do Disco: " << _diskSize << std::endl;
+    on_b_stop_clicked();
+
+    _prevPS = _pagSize;
+    _prevRS = _ramSize;
+    _prevDS = _diskSize;
+
+    mmu->updateSizes(_ramSize, _diskSize, _pagSize);
 }
 
 void Simulador_Memoria::on_le_pagSize_textChanged(const QString &arg1){
@@ -107,13 +127,7 @@ void Simulador_Memoria::on_le_pagSize_textChanged(const QString &arg1){
     try{
         pagSize = std::stoi(edit);
 
-        if((_ramSize != 0 && _ramSize%pagSize != 0) || (_diskSize != 0 && _diskSize%pagSize != 0)){
-            QMessageBox::warning(this, tr("ERROR BOX"), tr("Escolha um tamanho de página que seja divisível pelo tamanho do disco e pelo tamanho da RAM"));
-            ui->le_pagSize->setText(QString::number(_pagSize));
-            return;
-        }
-
-        if(pagSize != _pagSize && pagSize != 0)
+        if(pagSize != _pagSize)
             _pagSize = pagSize;
 
     }catch(std::invalid_argument e){
@@ -242,6 +256,7 @@ void Simulador_Memoria::receiveCommand(int line, QString commandStr){
         ui->te_disk->setText(QString::fromStdString(mmu->get_disk()));
         ui->te_pagTable->setText(QString::fromStdString(mmu->get_proTable()));
         ui->te_warning->setText(mmu->get_warning());
+        updateMonitor();
 
     }
 }
@@ -299,4 +314,18 @@ void Simulador_Memoria::on_rb_lru_clicked(){
 void Simulador_Memoria::on_rb_clock_clicked(){
     mmu->set_page_replacement(RELOGIO);
     on_b_stop_clicked();
+}
+
+void Simulador_Memoria::updateMonitor(){
+    int ramAv = mmu->getRamAv();
+    int diskAv = mmu->getDiskAv();
+    int ramProc = mmu->get_processes_at_ram();
+    int diskProc = mmu->get_processes_at_disk();
+
+    ui->l_ramProc->setText(QString::number(ramProc));
+    ui->l_diskProc->setText(QString::number(diskProc));
+    ui->l_ramPag->setText(QString::number((_ramSize - ramAv)/_pagSize));
+    ui->l_diskPag->setText(QString::number((_diskSize - diskAv)/_pagSize));
+    ui->l_ramFree->setText(QString::number(ramAv));
+    ui->l_memFree->setText(QString::number(diskAv + ramAv));
 }

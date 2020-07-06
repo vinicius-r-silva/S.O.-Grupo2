@@ -479,10 +479,25 @@ int MemoryManagement::get_processes_at_disk(){
     return processesAtDisk;
 }
 
+int MemoryManagement::getRamAv(){
+    return ramAvailable;
+}
+int MemoryManagement::getDiskAv(){
+    return diskAvailable;
+}
+
 void MemoryManagement::set_page_replacement(int replacement){
     this->replacement = replacement;
 }
 
 int MemoryManagement::get_page_replacement(){
     return replacement;
+}
+
+void MemoryManagement::updateSizes(int ramSize, int diskSize, int pageSize){
+    this->ramSize = ramSize;
+    this->diskSize = diskSize;
+    this->pageSize = pageSize;
+    ram->updateSizes(ramSize, pageSize);
+    disk->updateSizes(diskSize, pageSize);
 }
