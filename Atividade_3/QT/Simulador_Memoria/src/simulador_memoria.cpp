@@ -39,7 +39,7 @@ Simulador_Memoria::Simulador_Memoria(QWidget *parent) : QDialog(parent)
     QObject::connect(animation, SIGNAL(finished()), this, SLOT(animationFinished()));
     QObject::connect(animation, SIGNAL(sendCommand(int,QString)), this, SLOT(receiveCommand(int,QString)));
 
-    mmu = new MemoryManagement(32768, 32768, 4096);
+    mmu = new MemoryManagement(32768, 32768, 4096, LRU);
 }
 
 Simulador_Memoria::~Simulador_Memoria(){

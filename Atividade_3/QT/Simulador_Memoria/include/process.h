@@ -17,7 +17,6 @@ private:
     int pagesAtRam;
     int pagesAtDisk;
     
-    int lru_order;
     int referenced;
 
 public:
@@ -27,6 +26,7 @@ public:
 
     page_map *get_map();
     void set_pages(page *pages);
+    void update_map_entry(int logical, int physical, page* ref);
     void update_map_entry(int logical, int physical);
 
     int get_logical(int physical);

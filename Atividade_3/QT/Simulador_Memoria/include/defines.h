@@ -31,6 +31,7 @@ struct page{
 struct page_map{
     int logical;
     int physical;
+    page *ref;
 };
 
 #endif //DEFINES_H

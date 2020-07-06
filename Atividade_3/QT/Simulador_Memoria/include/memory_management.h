@@ -66,7 +66,7 @@ private:
     void move_to_begin_lru(int page_id, int pid);
 
 public:
-    MemoryManagement(int ramSize, int diskSize, int pageSize);
+    MemoryManagement(int ramSize, int diskSize, int pageSize, int replacement);
     ~MemoryManagement();
 
     std::string get_ram();

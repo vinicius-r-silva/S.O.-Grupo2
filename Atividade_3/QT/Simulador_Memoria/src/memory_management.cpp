@@ -138,7 +138,7 @@ void MemoryManagement::create_process(int id, int size){
         new_page->prev_lru = nullptr;
 
         result = add_page_ram(new_page);
-        process->update_map_entry(i, result);
+        process->update_map_entry(i, result, new_page);
 
         if(result == -1){
             sprintf(warning, "Erro ao criar processo %d, de tamanho %d", id, size);
@@ -194,7 +194,11 @@ void MemoryManagement::kill_process(int id){
         page_map *map = pl->process->get_map();
         int qtdPages = pl->process->get_qtdPages();
         for(i = 0; i < qtdPages; i++){
-            pageRemoved = remove_page_ram(map[i].physical);
+            if(map[i].physical >= 0)
+                pageRemoved = remove_page_ram(map[i].ref);
+            else
+                pageRemoved = remove_page_disk(id, i);
+                
             free(pageRemoved);
         }
         sprintf(warning, "Processo com ID %d foi removido", id);
@@ -385,6 +389,11 @@ void MemoryManagement::acesso_memoria(int pid, int byte,const char* acao){
     int Logical = byte / pageSize;
     process_list *pl = search_active_process(pid);
     if(pl != nullptr){
+        if(byte > pl->process->get_size()){
+            sprintf(warning, "erro na %s, o processo %d tem tamanho %d, e o endereco acessado e %d", acao, pid, pl->process->get_size(), byte);
+            return;
+        }
+
         page_map *map = pl->process->get_map();
         if(map[Logical].physical >= 0){
             sprintf(warning, "%s feita Sucesso.\nO endereço lógico %d do processo %d se encontra na página lógica %d, que por sua vez se encontra na página física %d", acao, byte, pid, Logical, map[Logical].physical);

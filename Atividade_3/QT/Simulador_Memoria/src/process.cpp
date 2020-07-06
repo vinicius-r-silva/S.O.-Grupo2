@@ -10,6 +10,7 @@ Process::Process(int id, int size, int pageSize){
     for(i = 0; i < this->qtdPages; i++){
         map[i].logical = -1;
         map[i].physical = -1;
+        map[i].ref = nullptr;
     }
 
     this->pagesAtRam = 0;
@@ -39,6 +40,11 @@ void Process::set_pages(page *pages){
 
 void Process::update_map_entry(int logical, int physical){
     map[logical].physical = physical;
+}
+
+void Process::update_map_entry(int logical, int physical, page* ref){
+    map[logical].physical = physical;
+    map[logical].ref = ref;
 }
 
 int Process::get_logical(int physical){
