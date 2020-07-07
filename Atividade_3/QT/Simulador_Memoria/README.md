@@ -24,6 +24,8 @@ C = comando
 A = argumento em decimal (byte como unidade)
 
 
+
+
 Comandos Disponíveis:
 
 C - Create (P1 C 500 = Cria processo de pid 1, com tamanho de 500 bytes)
