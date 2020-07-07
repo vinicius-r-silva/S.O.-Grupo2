@@ -16,6 +16,7 @@ make
 
 Comandos:
 P(x) C A
+
 x = pid do processo
             
 C = comando
