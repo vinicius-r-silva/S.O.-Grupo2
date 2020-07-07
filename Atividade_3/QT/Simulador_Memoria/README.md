@@ -16,5 +16,7 @@ make
 
 Comandos:
 P(x) C A -> x = pid do processo
+            
             C = comando
+            
             A = argumento em decimal (byte como unidade)
