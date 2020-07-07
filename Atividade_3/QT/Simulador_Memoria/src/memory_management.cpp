@@ -241,12 +241,9 @@ void MemoryManagement::update_lru_order(){
 
 void MemoryManagement::debug(){
     page* curr = lruBegin;
-    printf("\n");
     while (curr != nullptr){
-        printf(" (%d, %d) -> ", curr->pid, curr->page_id);
         curr = curr->next_lru;
     }
-    printf("\n");
     
 }
 
