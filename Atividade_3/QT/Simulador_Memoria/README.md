@@ -1,5 +1,7 @@
 # Simulador de algoritmos de troca de página
 
+Git: https://github.com/vinicius-r-silva/S.O.-Grupo2/edit/master/Atividade_3/QT/Simulador_Memoria
+
 # 1. Dependências:
 ``` 
 sudo apt-get install mesa-common-dev qt5-default cmake g++
@@ -13,8 +15,14 @@ cd build
 cmake ../.
 make
 ``` 
+# 3. Executar:
+``` 
+cd .../S.O.-Grupo2/Atividade_3/QT/Simulador_Memoria/
+./build/Simulador_Memoria
+``` 
 
-# 3. Os comandos são compostos da seguinte forma
+
+# 4. Os comandos são compostos da seguinte forma
 P(x) C A
 
 x = pid do processo
@@ -26,7 +34,7 @@ A = argumento em decimal (byte como unidade)
 
 
 
-# 3.1 Comandos Disponíveis:
+# 4.1 Comandos Disponíveis:
 
 C - Create (P1 C 500 = Cria processo de pid 1, com tamanho de 500 bytes)
 
