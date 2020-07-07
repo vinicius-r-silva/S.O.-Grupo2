@@ -15,8 +15,9 @@ make
 ``` 
 
 Comandos:
-P(x) C A -> x = pid do processo
+P(x) C A
+x = pid do processo
             
-            C = comando
+C = comando
             
-            A = argumento em decimal (byte como unidade)
+A = argumento em decimal (byte como unidade)
