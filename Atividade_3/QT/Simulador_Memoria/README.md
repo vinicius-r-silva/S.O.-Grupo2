@@ -1,11 +1,11 @@
 # Simulador de algoritmos de troca de página
 
-Dependências:
+# 1. Dependências:
 ``` 
 sudo apt-get install mesa-common-dev qt5-default cmake g++
 ``` 
 
-Compilar:
+# 2. Compilar:
 ``` 
 cd .../S.O.-Grupo2/Atividade_3/QT/Simulador_Memoria/
 mkdir build
@@ -14,7 +14,7 @@ cmake ../.
 make
 ``` 
 
-Os comandos são compostos da seguinte forma
+# 3. Os comandos são compostos da seguinte forma
 P(x) C A
 
 x = pid do processo
@@ -26,7 +26,7 @@ A = argumento em decimal (byte como unidade)
 
 
 
-Comandos Disponíveis:
+# 3.1 Comandos Disponíveis:
 
 C - Create (P1 C 500 = Cria processo de pid 1, com tamanho de 500 bytes)
 
