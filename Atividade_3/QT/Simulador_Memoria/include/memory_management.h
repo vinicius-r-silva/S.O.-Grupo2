@@ -69,6 +69,8 @@ private:
 
     page* get_page2remove();
 
+    void debug();
+
 public:
     MemoryManagement(int ramSize, int diskSize, int pageSize, int replacement);
     ~MemoryManagement();

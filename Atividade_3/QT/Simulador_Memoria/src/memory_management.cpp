@@ -239,6 +239,17 @@ void MemoryManagement::update_lru_order(){
     }
 }
 
+void MemoryManagement::debug(){
+    page* curr = lruBegin;
+    printf("\n");
+    while (curr != nullptr){
+        printf(" (%d, %d) -> ", curr->pid, curr->page_id);
+        curr = curr->next_lru;
+    }
+    printf("\n");
+    
+}
+
 int MemoryManagement::add_page_ram(page *new_page){
     int i = 0;
     int physical_address = 0;
@@ -286,6 +297,8 @@ int MemoryManagement::add_page_ram(page *new_page){
         page2remove->references = 0;
         ramAvailable -= pageSize;
     }
+
+    debug();
     if(i == ramPagesCount) return -1;
     return physical_address;
 }
@@ -353,6 +366,7 @@ page* MemoryManagement::remove_page_ram(page* page2remove){
         lruBegin = page2remove->next_lru;
     }
     if(page2remove == lruEnd){
+        lruEnd->next_lru = nullptr;
         lruEnd = page2remove->prev_lru;
     }
     if(page2remove->prev_lru != nullptr)
@@ -408,8 +422,12 @@ void MemoryManagement::move_to_begin_lru(int page_id, int pid){
         return;
 
     curr->prev_lru->next_lru = curr->next_lru;
+    if(curr->next_lru != nullptr)
+        curr->next_lru->prev_lru = curr->prev_lru;
+
     curr->prev_lru = nullptr;
     curr->next_lru = lruBegin;
+    lruBegin->prev_lru = curr;
     lruBegin = curr;
 }
 
