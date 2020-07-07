@@ -130,10 +130,11 @@ int32_t Memory::get_qtdPages(){
 }
 
 void Memory::updateSizes(int32_t size, int32_t pageSize){
+    clear_all();
+
     this->size = size;
     this->pageSize = pageSize;
     this->qtdPages = size / pageSize;
-    clear_all();
 
     free(this->pages);
 
