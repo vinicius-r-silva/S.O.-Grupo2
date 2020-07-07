@@ -517,6 +517,7 @@ void MemoryManagement::clean_all(){
     ramAvailable = ramSize;
     diskAvailable = diskSize;
     qtdPageFaults = 0;
+    relPos = 0;
 
     sprintf(warning, " ");
 }
