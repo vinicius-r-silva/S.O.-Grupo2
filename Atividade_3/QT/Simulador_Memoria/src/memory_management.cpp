@@ -169,6 +169,14 @@ void MemoryManagement::activate_waiting_processes(){
     waiting_process *curr = waiting_processes;
     while(curr != nullptr){
         if(curr->size <= (ramAvailable + diskAvailable)){
+            if(curr->prev != nullptr)
+                curr->prev->next = curr->next;
+            else
+                waiting_processes = curr->next;
+
+            if(curr->next != nullptr)
+                curr->next->prev = curr->prev;
+
             create_process(curr->id, curr->size);
             sprintf(warning, "%s\nProcesso %d de tamanho: %d, foi removido da lista de espera e ativado na memoria", warning, curr->id, curr->size);
         }
